@@ -78,16 +78,16 @@ void MEXTI_voidSetSignalLatch( u8 Copy_u8Line,  u8 Copy_u8EXTISenseMode )
 	switch(Copy_u8EXTISenseMode)
 	{
 	case (Rising_Edage):	 
-						SET_BIT( EXTI_Ptr -> RTSR, EXTI_Line );	
+						SET_BIT( EXTI_Ptr -> RTSR, Copy_u8Line );
 						break;
 
 	case (Falling_Edage):		
-						SET_BIT( EXTI_Ptr -> FTSR, EXTI_Line );	   
+						SET_BIT( EXTI_Ptr -> FTSR, Copy_u8Line );
 						break;
 
 	case (On_Change) :
-						SET_BIT( EXTI_Ptr -> FTSR, EXTI_Line );
-						SET_BIT( EXTI_Ptr -> RTSR, EXTI_Line );	  
+						SET_BIT( EXTI_Ptr -> FTSR, Copy_u8Line );
+						SET_BIT( EXTI_Ptr -> RTSR, Copy_u8Line );
 						break;
 
 	}
