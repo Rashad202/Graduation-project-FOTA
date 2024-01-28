@@ -41,17 +41,17 @@
 /*******************************************************************************************************/
 static const LedX_t Led_1 ={
 		_GPIOA_PORT,
-		_PIN_0
+		_PIN_1
 };
 
 
 static const LedX_t Led_2 ={
 		_GPIOA_PORT,
-		_PIN_1
+		_PIN_13
 };
 
 static const LedX_t Led_3 ={
-		_GPIOA_PORT,
+		_GPIOC_PORT,
 		_PIN_2
 };
 
