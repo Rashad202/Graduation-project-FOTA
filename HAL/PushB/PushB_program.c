@@ -36,8 +36,8 @@
 /*******************************************************************************************************/
 void PushB_Init(const PushBX_t *PushB){
 
-	MGPIO_voidSetPinMode(PushB->PushB_port,PushB->PushB_Pin,_MODE_INPUT);
-	MGPIO_voidSetPullType(PushB->PushB_port,PushB->PushB_Pin,_PULL_DOWN);
+	MGPIO_voidSetPinMode(PushB->PushB_port,PushB->PushB_Pin,MODE_INPUT);
+	MGPIO_voidSetPullType(PushB->PushB_port,PushB->PushB_Pin,PULL_DOWN);
 
 }
 
@@ -52,7 +52,7 @@ void PushB_Init(const PushBX_t *PushB){
 /*******************************************************************************************************/
 void PushB_DeInit(const PushBX_t *PushB){
 
-	MGPIO_voidSetPullType(PushB->PushB_port,PushB->PushB_Pin,_PULL_OFF);
+	MGPIO_voidSetPullType(PushB->PushB_port,PushB->PushB_Pin,PULL_OFF);
 
 }
 

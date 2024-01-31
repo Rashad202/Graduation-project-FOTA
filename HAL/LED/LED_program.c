@@ -38,7 +38,7 @@
 /*******************************************************************************************************/
 void LED_Init(const LedX_t *LED){
 
-	MGPIO_voidSetPinMode(LED->LED_port,LED->LED_Pin,_MODE_OUTPUT);
+	MGPIO_voidSetPinMode(LED->LED_port,LED->LED_Pin,MODE_OUTPUT);
 
 }
 
@@ -68,7 +68,7 @@ void LED_DeInit(const LedX_t *LED){
 /*******************************************************************************************************/
 void LED_On(const LedX_t *LED){
 
-	MGPIO_voidWriteData(LED->LED_port,LED->LED_Pin,_HIGH);
+	MGPIO_voidWriteData(LED->LED_port,LED->LED_Pin,HIGH);
 
 }
 
@@ -83,7 +83,7 @@ void LED_On(const LedX_t *LED){
 /*******************************************************************************************************/
 void LED_Off(const LedX_t *LED){
 
-	MGPIO_voidWriteData(LED->LED_port,LED->LED_Pin,_LOW);
+	MGPIO_voidWriteData(LED->LED_port,LED->LED_Pin,LOW);
 
 }
 
