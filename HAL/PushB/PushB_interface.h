@@ -27,8 +27,8 @@
 /*******************************************************************************************************/
 /*                                      HAL Components                                                 */
 /*******************************************************************************************************/
-#include "../../MGPIO/MGPIO_interface.h"
-#include "../../MRCC/MRCC_interface.h"
+#include "../../MCAL/MGPIO/MGPIO_interface.h"
+#include "../../MCAL/MRCC/MRCC_interface.h"
 #include "PushB_private.h"
 #include "PushB_Config.h"
 

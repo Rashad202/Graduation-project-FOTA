@@ -37,9 +37,9 @@
 /*                                      Standard Types LIB                                             */
 /*******************************************************************************************************/
 
-#include "../Libraries/STD_TYPES.h"
+#include "../../Libraries/STD_TYPES.h"
 //#include "LERROR_STATES.h"
-#include "../Libraries/BIT_MATH.h"
+#include "../../Libraries/BIT_MATH.h"
 
 
 /*#####################################################################################################*/
