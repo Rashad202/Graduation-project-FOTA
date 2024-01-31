@@ -33,12 +33,7 @@
 /*******************************************************************************************************/
 
 #include "../../Libraries/STD_TYPES.h"
-//#include "LERROR_STATES.h"
 #include "../../Libraries/BIT_MATH.h"
-
-
-/*#####################################################################################################*/
-/*#####################################################################################################*/
 
 /*******************************************************************************************************/
 /*                                      MCAL Components                                                */
@@ -131,11 +126,11 @@ typedef enum{
 #define  HSI   1U
 #define  PLL   2U
 /**********   **********/
-#define _HSE_CRYSTAL  0U
-#define _HSE_RC       1U
+#define HSE_CRYSTAL  0U
+#define HSE_RC       1U
 /**********   **********/
-#define _HSE_PLL       0U
-#define _HSI_PLL       1U
+#define HSE_PLL       0U
+#define HSI_PLL       1U
 
 /*
 - Function To Enable Prepheral :
@@ -171,15 +166,15 @@ void  MRCC_voidInitSystemClk(void);
 
 /*********** Macros Of :- RCC AHB1 CLK ENABLE ***************/
 
-#define _PERIPHERAL_EN_GPIOA     0U 
-#define _PERIPHERAL_EN_GPIOB     1U 
-#define _PERIPHERAL_EN_GPIOC     2U            
-#define _PERIPHERAL_EN_GPIOD     3U 
-#define _PERIPHERAL_EN_GPIOE     4U 
-#define _PERIPHERAL_EN_GPIOH     7U 
-#define _PERIPHERAL_EN_CRCEN     12U 
-#define _PERIPHERAL_EN_DMA1EN    21U 
-#define _PERIPHERAL_EN_DMA2EN    22U 
+#define PERIPHERAL_EN_GPIOA     0U
+#define PERIPHERAL_EN_GPIOB     1U
+#define PERIPHERAL_EN_GPIOC     2U
+#define PERIPHERAL_EN_GPIOD     3U
+#define PERIPHERAL_EN_GPIOE     4U
+#define PERIPHERAL_EN_GPIOH     7U
+#define PERIPHERAL_EN_CRCEN     12U
+#define PERIPHERAL_EN_DMA1EN    21U
+#define PERIPHERAL_EN_DMA2EN    22U
 
 
 	/********* Macros Of :- RCC APB1 peripheral clock enable register *********/

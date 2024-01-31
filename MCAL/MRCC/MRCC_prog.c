@@ -114,7 +114,7 @@ void MRCC_voidInitSystemClk(void)
 	/********** PLL **********/
 #elif CLKSRC == PLL	
 
-    #if PLL_SRC == _HSE_PLL 
+    #if PLL_SRC == HSE_PLL
      /*1-Enable HSE */
 			SET_BIT(MRCC->CR,16U);
 			/* while ( GET_BIT(RCC_CR, 17)==0);*/
@@ -127,7 +127,7 @@ void MRCC_voidInitSystemClk(void)
 			CLR_BIT(MRCC->CFGR,0U);
 			SET_BIT(MRCC->CFGR,1U);
  
-    #elif PLL_SRC == _HSI_PLL  
+    #elif PLL_SRC == HSI_PLL
             /*Enable HSI */
 		     SET_BIT(MRCC->CR,0U);
 			/*2- EN PLL*/
@@ -156,7 +156,7 @@ void MRCC_voidInitClock(CLKSrcName_t Copy_tClkSrc , HSESrc_t Copy_tHSESrc ,PLLSr
 		case HSE :
 		switch(Copy_tHSESrc)
 		{
-		  case _HSE_CRYSTAL : 
+		  case HSE_CRYSTAL :
 			/*1-Enable HSE */
 			SET_BIT(RCC_CR,16U);
 			/* while ( GET_BIT(RCC_CR, 17)==0);*/
@@ -167,7 +167,7 @@ void MRCC_voidInitClock(CLKSrcName_t Copy_tClkSrc , HSESrc_t Copy_tHSESrc ,PLLSr
 			CLR_BIT(RCC_CFGR,1U);
 		  break ;
 		  /************************************************/
-          case _HSE_RC :   
+          case HSE_RC :
 			/*Enable HSE */
 			SET_BIT(RCC_CR,16U);
             /*2-Disable BYP*/
@@ -194,7 +194,7 @@ void MRCC_voidInitClock(CLKSrcName_t Copy_tClkSrc , HSESrc_t Copy_tHSESrc ,PLLSr
 		case PLL :
 		switch(Copy_tPLLSrc)
 		{
-			case _HSE_PLL: 
+			case HSE_PLL:
 			/*1-Enable HSE */
 			SET_BIT(RCC_CR,16U);
 			/* while ( GET_BIT(RCC_CR, 17)==0);*/
@@ -211,7 +211,7 @@ void MRCC_voidInitClock(CLKSrcName_t Copy_tClkSrc , HSESrc_t Copy_tHSESrc ,PLLSr
 			
 			/**************************/
 			
-			case _HSI_PLL : 
+			case HSI_PLL :
 			/*Enable HSI */
 		     SET_BIT(RCC_CR,0U);
 			/*2- EN PLL*/
