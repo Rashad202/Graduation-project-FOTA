@@ -19,19 +19,12 @@
 /*                                                                                                     */
 /*******************************************************************************************************/
 
-/*******************************************************************************************************/
 /*                                   guard of file will call on time in .c                             */
-/*******************************************************************************************************/
-
-#ifndef _GPIO_PRIVATE_H
-#define _GPIO_PRIVATE_H
+#ifndef GPIO_PRIVATE_H
+#define GPIO_PRIVATE_H
 
 
-/*******************************************************************************************************/
 /*                                    Macros Base Address Of GPI0x Registers                           */
-/*******************************************************************************************************/
-
-
 #define  GPIOA_BASE_ADDRESS         0x40020000
 #define  GPIOB_BASE_ADDRESS         0x40020400
 #define  GPIOC_BASE_ADDRESS         0x40020800 
@@ -39,10 +32,7 @@
 #define  GPIOE_BASE_ADDRESS 		0x40021000
 #define  GPIOH_BASE_ADDRESS 		0x40021C00
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOA Register Map                                     */
-/*******************************************************************************************************/
-
 #define GPIOA_MODER            (*((volatile u32 *)(GPIOA_BASE_ADDRESS+0x00)))
 #define GPIOA_OTYPER           (*((volatile u32 *)(GPIOA_BASE_ADDRESS+0x04)))
 #define GPIOA_OSPEEDR          (*((volatile u32 *)(GPIOA_BASE_ADDRESS+0x08)))
@@ -54,10 +44,7 @@
 #define GPIOA_AFRL             (*((volatile u32 *)(GPIOA_BASE_ADDRESS+0x20)))
 #define GPIOA_AFRH             (*((volatile u32 *)(GPIOA_BASE_ADDRESS+0x24)))
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOB Register Map                                     */
-/*******************************************************************************************************/
-
 #define GPIOB_MODER            (*((volatile u32 *)(GPIOB_BASE_ADDRESS+0x00)))
 #define GPIOB_OTYPER           (*((volatile u32 *)(GPIOB_BASE_ADDRESS+0x04)))
 #define GPIOB_OSPEEDR          (*((volatile u32 *)(GPIOB_BASE_ADDRESS+0x08)))
@@ -70,10 +57,7 @@
 #define GPIOB_AFRH             (*((volatile u32 *)(GPIOB_BASE_ADDRESS+0x24)))
 
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOC Register Map                                     */
-/*******************************************************************************************************/
-
 #define GPIOC_MODER            (*((volatile u32 *)(GPIOC_BASE_ADDRESS+0x00)))
 #define GPIOC_OTYPER           (*((volatile u32 *)(GPIOC_BASE_ADDRESS+0x04)))
 #define GPIOC_OSPEEDR          (*((volatile u32 *)(GPIOC_BASE_ADDRESS+0x08)))
@@ -85,10 +69,7 @@
 #define GPIOC_AFRL             (*((volatile u32 *)(GPIOC_BASE_ADDRESS+0x20)))
 #define GPIOC_AFRH             (*((volatile u32 *)(GPIOC_BASE_ADDRESS+0x24)))
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOD Register Map                                     */
-/*******************************************************************************************************/
-
 #define GPIOD_MODER            (*((volatile u32 *)(GPIOD_BASE_ADDRESS+0x00)))
 #define GPIOD_OTYPER           (*((volatile u32 *)(GPIOD_BASE_ADDRESS+0x04)))
 #define GPIOD_OSPEEDR          (*((volatile u32 *)(GPIOD_BASE_ADDRESS+0x08)))
@@ -101,10 +82,7 @@
 #define GPIOD_AFRH             (*((volatile u32 *)(GPIOD_BASE_ADDRESS+0x24)))
 
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOE Register Map                                     */
-/*******************************************************************************************************/
-
 #define GPIOE_MODER            (*((volatile u32 *)(GPIOE_BASE_ADDRESS+0x00)))
 #define GPIOE_OTYPER           (*((volatile u32 *)(GPIOE_BASE_ADDRESS+0x04)))
 #define GPIOE_OSPEEDR          (*((volatile u32 *)(GPIOE_BASE_ADDRESS+0x08)))
@@ -116,9 +94,7 @@
 #define GPIOE_AFRL             (*((volatile u32 *)(GPIOE_BASE_ADDRESS+0x20)))
 #define GPIOE_AFRH             (*((volatile u32 *)(GPIOE_BASE_ADDRESS+0x24)))
 
-/*******************************************************************************************************/
 /*                                    Macros Of GPIOH Register Map                                     */
-/*******************************************************************************************************/
 #define GPIOH_MODER            (*((volatile u32 *)(GPIOH_BASE_ADDRESS+0x00)))
 #define GPIOH_OTYPER           (*((volatile u32 *)(GPIOH_BASE_ADDRESS+0x04)))
 #define GPIOH_OSPEEDR          (*((volatile u32 *)(GPIOH_BASE_ADDRESS+0x08)))
@@ -130,9 +106,7 @@
 #define GPIOH_AFRL             (*((volatile u32 *)(GPIOH_BASE_ADDRESS+0x20)))
 #define GPIOH_AFRH             (*((volatile u32 *)(GPIOH_BASE_ADDRESS+0x24)))
 
-/*******************************************************************************************************/
 /*                                       Register Definitions                                          */
-/*-----------------------------------------------------------------------------------------------------*/
 /*     - Developer can't Edit in it                                                                    */
 /*     - Register _ Defination		                                                                   */
 /*     - Design :                                                                                      */
@@ -155,46 +129,25 @@ typedef struct{
 	 volatile u32 AFRH   ;
 }GPIOx_t;
 
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOA                               */
-/*******************************************************************************************************/
-
 #define MGPIOA        ((GPIOx_t *) GPIOA_BASE_ADDRESS )
 
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOB                              */
-/*******************************************************************************************************/
-
-  
 #define MGPIOB         ((GPIOx_t *) GPIOB_BASE_ADDRESS )
-
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOC                               */
-/*******************************************************************************************************/
-
 #define MGPIOC        ((GPIOx_t *) GPIOC_BASE_ADDRESS )
-
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOCD                              */
-/*******************************************************************************************************/
-
 #define MGPIOD       ((GPIOx_t *) GPIOD_BASE_ADDRESS )
 
 
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOE                               */
-/*******************************************************************************************************/
-
 #define MGPIOE         ((GPIOx_t *) GPIOE_BASE_ADDRESS )
 
-/*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of GPIOH                               */
-/*******************************************************************************************************/
-
 #define MGPIOH        ((GPIOx_t *) GPIOH_BASE_ADDRESS )
 
 
 
 #define _LUCKED_PIN 16U
-#endif //_GPIO_PRIVATE_H
+#endif //GPIO_PRIVATE_H
 
