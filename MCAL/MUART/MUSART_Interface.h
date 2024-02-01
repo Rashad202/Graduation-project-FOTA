@@ -20,7 +20,8 @@
 #ifndef UART_INTERFACE_H
 #define UART_INTERFACE_H
 
-
+#define MSUART_NewLine	'\r'
+#define	MSUART_Space    '\n'
 
 void MSUART_voidInit(void);
 
@@ -28,7 +29,13 @@ void MUSART_voidEnable(u8 copy_u8Index);
 
 void MUSART_voidDisable(u8 copy_u8Index);
 
-void MUSART_u8SendData(u8 copy_u8Index, u8* copy_u8Data, u8 copy_u8Len);
+void MUSART_u8Send_Byte(u8 copy_u8Index ,u8 copy_u8Data);
+
+void MUSART_u8Send_Data(u8 copy_u8Index , u8 *copy_u8Data);
+/*
+void USART_voidTransmitByte (u8 copy_u8Index, u8 u8Byte);
+void USART_voidTransmitString (u8 copy_u8Index, u8 *ptru8String );
+*/
 
 u8 MUSART_u8ReadData(u8 copy_u8Index);
 

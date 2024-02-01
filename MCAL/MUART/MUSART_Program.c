@@ -61,17 +61,17 @@ void MSUART_voidInit(void)
 
 	/***********	UART_1		***********/
 #if (UART1_USED == U_ENABLE)
-	USART1_REG->BRR = UART1_BUAD_RATE;
-	USART1_REG->CR2 |= (UART1_STOP_BITS << 12);
-	USART1_REG->CR1.SBK = UART1_SEND_BREAK;
-	USART1_REG->CR1.RE = UART1_RECEIVER;
-	USART1_REG->CR1.TE = UART1_TRANSMITTER;
-	USART1_REG->CR1.RXNEIE = UART1_RX_INT;
-	USART1_REG->CR1.TCIE = UART1_T_COMP_INT;
-	USART1_REG->CR1.PCE = UART1_PARITY_ENABLE;
-	USART1_REG->CR1.PS = UART1_PARITY_MODE;
-	USART1_REG->CR1.M = UART1_WORD_LEN;
-	USART1_REG->CR1.OVER8	= UART1_OVER_SAMPLING;
+	USART1_REG->BRR = UART1_BUAD_RATE;				//baud rate
+	USART1_REG->CR2 |= (UART1_STOP_BITS << 12);		//stop bit mode
+	USART1_REG->CR1.SBK = UART1_SEND_BREAK;			//Send break
+	USART1_REG->CR1.RE = UART1_RECEIVER;			//Receiver enable
+	USART1_REG->CR1.TE = UART1_TRANSMITTER;			//Transmitter enable
+	USART1_REG->CR1.RXNEIE = UART1_RX_INT;			//RXNE interrupt enable
+	USART1_REG->CR1.TCIE = UART1_T_COMP_INT;		//Transmission complete interrupt enable
+	USART1_REG->CR1.PCE = UART1_PARITY_ENABLE;		//Parity control enable
+	USART1_REG->CR1.PS = UART1_PARITY_MODE;			//Parity selection
+	USART1_REG->CR1.M = UART1_WORD_LEN;				//Word length
+	USART1_REG->CR1.OVER8	= UART1_OVER_SAMPLING;	//Oversampling mode
 
 #endif
 
@@ -152,22 +152,35 @@ void MUSART_voidDisable(u8 copy_u8Index){
 }
 
 /*******************************************************************************************************/
-/*                                      04- MSUART_u8SendData                                          */
+/*                                      04- MUSART_u8Send_Byte                                         */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> copy_u8Index :USART(1,2,6)   -copy_u8Data : adders to data array         */
-/*   - copy_u8Len      : length of array               												   */
+/* 2- Function Input       -> copy_u8Index :USART(1,2,6)   -copy_u8Data : copy of data 	    	       */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 
-void MUSART_u8SendData(u8 copy_u8Index, u8* copy_u8Data, u8 copy_u8Len){
+void MUSART_u8Send_Byte(u8 copy_u8Index ,u8 copy_u8Data){
+  UART_REG uhandler = MUSART_GetHandler(copy_u8Index);
+  while(0==GET_BIT(uhandler->SR, 7));// wait until transmission complete into the shift register
+  uhandler ->DR = copy_u8Data;
+  while(0==GET_BIT(uhandler->SR, 6));// wait until transmission of a frame containing data is complete
+}
 
-	UART_REG uhandler = MUSART_GetHandler(copy_u8Index);
-	for(u8 counter = 0; counter < copy_u8Len; counter++){
-		uhandler ->DR = copy_u8Data[counter];
-		while(!GET_BIT(uhandler->SR, 6));
-	}
+/*******************************************************************************************************/
+/*                                      04- MUSART_u8Send_Data                                         */
+/*-----------------------------------------------------------------------------------------------------*/
+/* 1- Function Description -> Enable Peripheral Clock                                                  */
+/* 2- Function Input       -> copy_u8Index :USART(1,2,6)   -copy_u8Data : copy of data 	    	       */
+/* 3- Function Return      -> No Thing                                                                 */
+/*******************************************************************************************************/
 
+void MUSART_u8Send_Data(u8 copy_u8Index , u8 *copy_u8Data){
+  u8 Local_u8Index =0;
+  while('\0'!=copy_u8Data[Local_u8Index])
+  {
+	  MUSART_u8Send_Byte(copy_u8Index,copy_u8Data[Local_u8Index]);
+	  Local_u8Index++;
+  }
 }
 
 /*******************************************************************************************************/

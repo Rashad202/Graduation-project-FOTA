@@ -34,13 +34,13 @@
 
 
 typedef enum{
-    B_1200   = 0x44505400,
-    B_2400   = 0x43d05800,
+    B_1200   = 0x3415,
+    B_2400   = 0x416B,
     B_9600   = 0x683,
-    B_19200  = 0x42504000,
-    B_38400  = 0x41d08000,
-    B_57600  = 0x418b0000,
-    B_115200 = 0x410b0000
+    B_19200  = 0x341,
+    B_38400  = 0x3E1,
+    B_57600  = 0x116,
+    B_115200 = 0x8B
 }u_BaudRate_t;
 
 
@@ -49,7 +49,7 @@ typedef enum{
 #define UART1_USED             U_ENABLE
 
 #define UART1_SEND_BREAK       U_DISABLE
-#define UART1_RECEIVER         U_ENABLE
+#define UART1_RECEIVER         U_DISABLE
 #define UART1_TRANSMITTER      U_ENABLE
 
 #define UART1_T_COMP_INT       U_DISABLE
