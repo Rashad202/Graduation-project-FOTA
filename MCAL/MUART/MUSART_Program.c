@@ -23,7 +23,10 @@
 #include "../../Libraries/STD_TYPES.h"
 #include "../../Libraries/BIT_MATH.h"
 
-
+// Global Pointer to Function to Hold USART ISR Address
+void (*USART_USART1Function)(void) = NULL;
+void (*USART_USART2Function)(void) = NULL;
+void (*USART_USART6Function)(void) = NULL;
 /*#####################################################################################################*/
 /*#####################################################################################################*/
 
@@ -61,54 +64,80 @@ void MSUART_voidInit(void)
 
 	/***********	UART_1		***********/
 #if (UART1_USED == U_ENABLE)
-	USART1_REG->BRR = UART1_BUAD_RATE;				//baud rate
-	USART1_REG->CR2 |= (UART1_STOP_BITS << 12);		//stop bit mode
-	USART1_REG->CR1.SBK = UART1_SEND_BREAK;			//Send break
-	USART1_REG->CR1.RE = UART1_RECEIVER;			//Receiver enable
-	USART1_REG->CR1.TE = UART1_TRANSMITTER;			//Transmitter enable
-	USART1_REG->CR1.RXNEIE = UART1_RX_INT;			//RXNE interrupt enable
-	USART1_REG->CR1.TCIE = UART1_T_COMP_INT;		//Transmission complete interrupt enable
-	USART1_REG->CR1.PCE = UART1_PARITY_ENABLE;		//Parity control enable
-	USART1_REG->CR1.PS = UART1_PARITY_MODE;			//Parity selection
-	USART1_REG->CR1.M = UART1_WORD_LEN;				//Word length
-	USART1_REG->CR1.OVER8	= UART1_OVER_SAMPLING;	//Oversampling mode
-
+	/**< Configure UART baud rate  */
+	USART1_REG->BRR = UART1_BUAD_RATE;
+	/**< Configure UART stop bits */
+	USART1_REG->CR2 |= (UART1_STOP_BITS << 12);
+	/**< Configure UART send break character */
+	USART1_REG->CR1.SBK = UART1_SEND_BREAK;
+	/**< Configure UART RX enable/Disable */
+	USART1_REG->CR1.RE = UART1_RECEIVER;
+	/**< Configure UART1 TX enable/Disable */
+	USART1_REG->CR1.TE = UART1_TRANSMITTER;
+	/**< Configure UART1 RX Interrupt enable/Disable */
+	USART1_REG->CR1.RXNEIE = UART1_RX_INT;
+	/*< Configure UART1 Transmission complete interrupt enable/disable/*/
+	USART1_REG->CR1.TCIE = UART1_T_COMP_INT;
+	/**< Enable/Disable UART1 parity mode */
+	USART1_REG->CR1.PCE = UART1_PARITY_ENABLE;
+	/**< Configure UART1 parity mode */
+	USART1_REG->CR1.PS = UART1_PARITY_MODE;
+	/**< Configure UART1 word length (data bits) */
+	USART1_REG->CR1.M = UART1_WORD_LEN;
+	/**< Configure UART1 Over-sampling mode */
+	USART1_REG->CR1.OVER8	= UART1_OVER_SAMPLING;
 #endif
 
 	/***********	UART_2		***********/
 #if (UART2_USED == U_ENABLE)
-	USART2_REG->CR1.SBK = UART2_SEND_BREAK;
-	USART2_REG->CR1.RE = UART2_RECEIVER;
-	USART2_REG->CR1.TE = UART2_TRANSMITTER;
-	USART2_REG->CR1.RXNEIE = UART2_RX_INT;
-	USART2_REG->CR1.TCIE = UART2_T_COMP_INT;
-	USART2_REG->CR1.PCE = UART2_PARITY_ENABLE;
-	USART2_REG->CR1.PS = UART2_PARITY_MODE;
-	USART2_REG->CR1.M = UART2_WORD_LEN;
-	USART2_REG->CR1.OVER8	= UART2_OVER_SAMPLING;
-
+	/**< Configure UART baud rate  */
 	USART2_REG->BRR = UART2_BUAD_RATE;
-
+	/**< Configure UART stop bits */
 	USART2_REG->CR2 |= (UART2_STOP_BITS << 12);
+	/**< Configure UART send break character */
+	USART2_REG->CR1.SBK = UART2_SEND_BREAK;
+	/**< Configure UART RX enable/Disable */
+	USART2_REG->CR1.RE = UART2_RECEIVER;
+	/**< Configure UART1 TX enable/Disable */
+	USART2_REG->CR1.TE = UART2_TRANSMITTER;
+	/**< Configure UART1 RX Interrupt enable/Disable */
+	USART2_REG->CR1.RXNEIE = UART2_RX_INT;
+	/*< Configure UART1 Transmission complete interrupt enable/disable/*/
+	USART2_REG->CR1.TCIE = UART2_T_COMP_INT;
+	/**< Enable/Disable UART1 parity mode */
+	USART2_REG->CR1.PCE = UART2_PARITY_ENABLE;
+	/**< Configure UART1 parity mode */
+	USART2_REG->CR1.PS = UART2_PARITY_MODE;
+	/**< Configure UART1 word length (data bits) */
+	USART2_REG->CR1.M = UART2_WORD_LEN;
+	/**< Configure UART1 Over-sampling mode */
+	USART2_REG->CR1.OVER8	= UART2_OVER_SAMPLING;
 #endif
 
 	/***********	UART_6		***********/
 #if (UART6_USED == U_ENABLE)
+	/**< Configure UART baud rate  */
 	USART6_REG->BRR = UART6_BUAD_RATE;
-
+	/**< Configure UART stop bits */
 	USART6_REG->CR2 |= (UART6_STOP_BITS << 12);
-
+	/**< Configure UART send break character */
 	USART6_REG->CR1.SBK = UART6_SEND_BREAK;
+	/**< Configure UART RX enable/Disable */
 	USART6_REG->CR1.RE = UART6_RECEIVER;
+	/**< Configure UART1 TX enable/Disable */
 	USART6_REG->CR1.TE = UART6_TRANSMITTER;
+	/**< Configure UART1 RX Interrupt enable/Disable */
 	USART6_REG->CR1.RXNEIE = UART6_RX_INT;
+	/*< Configure UART1 Transmission complete interrupt enable/disable/*/
 	USART6_REG->CR1.TCIE = UART6_T_COMP_INT;
+	/**< Enable/Disable UART1 parity mode */
 	USART6_REG->CR1.PCE = UART6_PARITY_ENABLE;
+	/**< Configure UART1 parity mode */
 	USART6_REG->CR1.PS = UART6_PARITY_MODE;
+	/**< Configure UART1 word length (data bits) */
 	USART6_REG->CR1.M = UART6_WORD_LEN;
+	/**< Configure UART1 Over-sampling mode */
 	USART6_REG->CR1.OVER8	= UART6_OVER_SAMPLING;
-
-
 #endif
 }
 
@@ -160,10 +189,10 @@ void MUSART_voidDisable(u8 copy_u8Index){
 /*******************************************************************************************************/
 
 void MUSART_u8Send_Byte(u8 copy_u8Index ,u8 copy_u8Data){
-  UART_REG uhandler = MUSART_GetHandler(copy_u8Index);
-  while(0==GET_BIT(uhandler->SR, 7));// wait until transmission complete into the shift register
-  uhandler ->DR = copy_u8Data;
-  while(0==GET_BIT(uhandler->SR, 6));// wait until transmission of a frame containing data is complete
+	UART_REG uhandler = MUSART_GetHandler(copy_u8Index);
+	while(0==GET_BIT(uhandler->SR, 7));// wait until transmission complete into the shift register
+	uhandler ->DR = copy_u8Data;
+	while(0==GET_BIT(uhandler->SR, 6));// wait until transmission of a frame containing data is complete
 }
 
 /*******************************************************************************************************/
@@ -175,12 +204,12 @@ void MUSART_u8Send_Byte(u8 copy_u8Index ,u8 copy_u8Data){
 /*******************************************************************************************************/
 
 void MUSART_u8Send_Data(u8 copy_u8Index , u8 *copy_u8Data){
-  u8 Local_u8Index =0;
-  while('\0'!=copy_u8Data[Local_u8Index])
-  {
-	  MUSART_u8Send_Byte(copy_u8Index,copy_u8Data[Local_u8Index]);
-	  Local_u8Index++;
-  }
+	u8 Local_u8Index =0;
+	while('\0'!=copy_u8Data[Local_u8Index])
+	{
+		MUSART_u8Send_Byte(copy_u8Index,copy_u8Data[Local_u8Index]);
+		Local_u8Index++;
+	}
 }
 
 /*******************************************************************************************************/
@@ -195,13 +224,14 @@ void MUSART_u8Send_Data(u8 copy_u8Index , u8 *copy_u8Data){
 /*******************************************************************************************************/
 
 
-u8 MUSART_u8ReadData(u8 copy_u8Index){
+void MUSART_u8Read_Byte(u8 copy_u8Index,u8 *copy_u8Data){
 	UART_REG uhandler = MUSART_GetHandler(copy_u8Index);
-	return (u8) uhandler->DR;
+	//while(0==GET_BIT(uhandler->SR, 5));
+	*copy_u8Data= uhandler->DR;
 }
 
 /*******************************************************************************************************/
-/*                                      01- MUSART_GetHandler                                          */
+/*                                      06- MUSART_GetHandler                                          */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
@@ -221,4 +251,51 @@ UART_REG MUSART_GetHandler(u8 copy_u8Index){
 	case 6: L_handle =  (UART_REG) USART6_BASE_ADRESS; break;
 	}
 	return L_handle;
+}
+
+
+/*******************************************************************************************************/
+/*                                      07- USART1_voidSetCallBack                                     */
+/*-----------------------------------------------------------------------------------------------------*/
+
+void USART1_voidSetCallBack( void (*ptr) (void) )
+{
+	USART_USART1Function = ptr;
+}
+
+/*******************************************************************************************************/
+/*                                      08- USART2_voidSetCallBack                                     */
+/*-----------------------------------------------------------------------------------------------------*/
+void USART2_voidSetCallBack( void (*ptr) (void) )
+{
+	USART_USART2Function = ptr;
+}
+/*******************************************************************************************************/
+/*                                      09- USART2_voidSetCallBack                                     */
+/*-----------------------------------------------------------------------------------------------------*/
+void USART6_voidSetCallBack( void (*ptr) (void) )
+{
+	USART_USART6Function = ptr;
+}
+
+/*******************************************************************************************************/
+/** ISR of USART1 **/
+void USART1_IRQHandler(void)
+{
+	USART1_REG->SR = 0 ;	//reset flags
+	USART_USART1Function();
+}
+
+/** ISR of USART2 **/
+void USART2_IRQHandler(void)
+{
+	USART2_REG->SR = 0 ;
+	USART_USART2Function();
+}
+
+/** ISR of USART6 **/
+void USART6_IRQHandler(void)
+{
+	USART6_REG->SR = 0 ;
+	USART_USART6Function();
 }
