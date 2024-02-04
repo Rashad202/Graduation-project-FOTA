@@ -10,40 +10,28 @@
 /*      04- MGPIO_voidSetPullType                                                                      */
 /*      05- MGPIO_u8ReadData                                                                           */
 /*      06- MGPIO_voidWriteData                                                                        */
-/*      07- MGPIO_voidToggleData                                                                        */
+/*      07- MGPIO_voidToggleData                                                                       */
 /*      08- MGPIO_voidPinLock                                                                          */
 /*      09- MGPIO_voidDirectSetReset                                                                   */
 /*      10- MGPIO_voidSetPinAltFn                                                                      */
 /*******************************************************************************************************/
 
-/*******************************************************************************************************/	
-/*	* What i sell To Customer                                                                          */
-/*		*  The Archictect Give The API	                                                               */
-/*						- The Name Of Function                                                         */
-/*						- What is The Input                                                            */
-/*						- What Is The Output                                                           */
-/*						- Macro                                                                        */
 /*******************************************************************************************************/
-
-
 /*                                   guard of file will call on time in .c                             */
-
 #ifndef GPIO_INTERFACE_H
 #define GPIO_INTERFACE_H
 
-
+/*******************************************************************************************************/
 /*                                      Standard Types LIB                                             */
-
 #include "../../Libraries/STD_TYPES.h"
 #include "../../Libraries/BIT_MATH.h"
 
-
-
+/*******************************************************************************************************/
 /*                                      MCAL Components                                                */
-
 #include "MGPIO_private.h"
 #include "MGPIO_config.h"
 
+/*******************************************************************************************************/
 /*                                      Macros Of Port                                                 */
 
 #define GPIOA_PORT   		   0U
@@ -52,7 +40,7 @@
 #define GPIOD_PORT   		   3U
 #define GPIOE_PORT   		   4U
 #define GPIOH_PORT   		   5U
-
+/*******************************************************************************************************/
 /*                                      Macros Of Pins                                                 */
 #define PIN_0        		   0U
 #define PIN_1        		   1U
@@ -70,33 +58,32 @@
 #define PIN_13       		   13U
 #define PIN_14       		   14U
 #define PIN_15       		   15U
-
+/*******************************************************************************************************/
 /*                                      Macros Of Mode                                                 */
 #define MODE_INPUT      	 (0b00)
 #define MODE_OUTPUT     	 (0b01)
 #define MODE_ALTF       	 (0b10)
 #define MODE_ANALOG     	 (0b11)
-
+/*******************************************************************************************************/
 /*                                      Macros Of Type                                                 */
 #define OUTPUT_TYPE_PUSH_PULL    0U
 #define OUTPUT_TYPE_OPEN_DRAIN   1U
-
+/*******************************************************************************************************/
 /*                                      Macros Of Speed                                                 */
 #define OUTPUT_SPEED_LOW       (0b00)
 #define OUTPUT_SPEED_MEDUIM    (0b01)
 #define OUTPUT_SPEED_HIGH      (0b10)
 #define OUTPUT_SPEED_VERY_HIGH (0b11)
-
+/*******************************************************************************************************/
 /*                                      Macros Of PULL                                                 */
 #define PULL_OFF              (0b00)
 #define PULL_UP               (0b01)
 #define PULL_DOWN             (0b10)
+/*******************************************************************************************************/
 /*                                      Macros Write Data                                              */
-
-
-#define HIGH                     	1U
+#define HIGH                   	1U
 #define LOW	                 	0U
-
+/*******************************************************************************************************/
 /*                                      Macros ALTF                                                    */
 #define ALTFN_0           0b0000
 #define ALTFN_1           0b0001
@@ -115,7 +102,7 @@
 #define ALTFN_14          0b1110
 #define ALTFN_15          0b1111
 
-
+/*******************************************************************************************************/
 /*                                      Function Prototypes                                            */
 /*******************************************************************************************************/
 /*                                      01- MGPIO_voidSetPinMode                                       */
@@ -182,7 +169,6 @@ void MGPIO_voidSetPullType(u8 Copy_u8PortName ,u32 Copy_u8PinNum ,u32 Copy_u8Pul
 
 u8 MGPIO_u8ReadData(u8 Copy_u8PORT ,u8 Copy_u8PIN);
 
-
 /*******************************************************************************************************/
 /*                                      06- MGPIO_voidWriteData                                        */
 /*-----------------------------------------------------------------------------------------------------*/
@@ -195,11 +181,20 @@ u8 MGPIO_u8ReadData(u8 Copy_u8PORT ,u8 Copy_u8PIN);
 
 void MGPIO_voidWriteData(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8State);
 
+/*******************************************************************************************************/
+/*                                      07- MGPIO_voidToggleData                                       */
+/*-----------------------------------------------------------------------------------------------------*/
+/* 1- Function Description -> toggle Data At ODR	Value :                                            */
+/*                               - HIGH >> Low                                                         */
+/*                               - LOW	>> High                                                        */
+/* 2- Function Input       -> Copy_u8PortName ,   Copy_u8PinNum                                        */
+/* 3- Function Return      -> No Thing                                                                 */
+/*******************************************************************************************************/
 
 void MGPIO_voidToggleData(u8 Copy_u8PortName ,u8 Copy_u8PinNum);
 
 /*******************************************************************************************************/
-/*                                      07- MGPIO_voidPinLock                                          */
+/*                                      08- MGPIO_voidPinLock                                          */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> to Lock pin :                                                            */
 /*                               1)Set Pin                                                             */
@@ -212,7 +207,7 @@ void MGPIO_voidToggleData(u8 Copy_u8PortName ,u8 Copy_u8PinNum);
 void MGPIO_voidPinLock(u8 Copy_u8PortNum ,u8 Copy_u8PinNum );
 
 /*******************************************************************************************************/
-/*                                      08- MGPIO_voidDirectSetReset                                   */
+/*                                      09- MGPIO_voidDirectSetReset                                   */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> to Set pin Direction :                                                   */
 /*                               1)Set Pin                                                             */
@@ -223,7 +218,7 @@ void MGPIO_voidPinLock(u8 Copy_u8PortNum ,u8 Copy_u8PinNum );
 void MGPIO_vDirectSetReset(u8 Copy_u8PortName , u8 Copy_u8PinNum, u8 Copy_u8State);
 
 /*******************************************************************************************************/
-/*                                      09- MGPIO_voidSetPinAltFn                                      */
+/*                                      10- MGPIO_voidSetPinAltFn                                      */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> to Set pin Altarnate :                                                   */
 /* 2- Function Input       -> Copy_u8PortName ,   Copy_u8PinNum  ,Copy_u8ALF                           */                   
@@ -232,6 +227,7 @@ void MGPIO_vDirectSetReset(u8 Copy_u8PortName , u8 Copy_u8PinNum, u8 Copy_u8Stat
 
 void MGPIO_voidSetPinAltFn( u8 Copy_u8PortNum ,u8 Copy_u8PinNum, u8 Copy_u8ALF );
 
+/*******************************************************************************************************/
 
 
 

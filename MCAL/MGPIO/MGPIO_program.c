@@ -6,16 +6,18 @@
 /*******************************************************************************************************/
 
 
+/*******************************************************************************************************/
 /*                                      Standard Types LIB                                             */
 #include "../../Libraries/STD_TYPES.h"
 #include "../../Libraries/BIT_MATH.h"
-
+/*******************************************************************************************************/
 /*                                      MCAL Components                                                */
 #include "MGPIO_private.h"
 #include "MGPIO_interface.h"
 #include "MGPIO_config.h"
-
+/*******************************************************************************************************/
 /*                                      Functions Implementations                                      */
+/*******************************************************************************************************/
 void MGPIO_voidSetPinMode(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8Mode  ){
 	
 	switch(Copy_u8PortName)
@@ -29,11 +31,7 @@ void MGPIO_voidSetPinMode(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8Mode  
 	  default : /*ERROR*/ break ;
     }
 }
-
-
 /*******************************************************************************************************/
-
-
 void MGPIO_voidSetPinOutPutType(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8OutPutType  ){
 	
 	switch(Copy_u8PortName)
@@ -48,11 +46,7 @@ void MGPIO_voidSetPinOutPutType(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8
      }
 	
 }
-
-
 /*******************************************************************************************************/
-
-
 void MGPIO_voidSetPinOutSpeed(u8 Copy_u8PortName ,u32 Copy_u8PinNum ,u32 Copy_u8OutSpeed ){
 	
 	switch(Copy_u8PortName)
@@ -66,10 +60,7 @@ void MGPIO_voidSetPinOutSpeed(u8 Copy_u8PortName ,u32 Copy_u8PinNum ,u32 Copy_u8
 	  default : /*ERROR*/ break ;
 	}
 }
-
 /*******************************************************************************************************/
-
-
 void MGPIO_voidSetPullType(u8 Copy_u8PortName ,u32 Copy_u8PinNum ,u32 Copy_u8PullType )
 {
 	
@@ -85,10 +76,7 @@ void MGPIO_voidSetPullType(u8 Copy_u8PortName ,u32 Copy_u8PinNum ,u32 Copy_u8Pul
 	}
 	
 }
-
 /*******************************************************************************************************/
-
-
 u8 MGPIO_u8ReadData(u8 Copy_u8PORT ,u8 Copy_u8PIN)
 {
 	u8 L_u8Data = 0 ;
@@ -111,10 +99,7 @@ u8 MGPIO_u8ReadData(u8 Copy_u8PORT ,u8 Copy_u8PIN)
 	return L_u8Data;
 	
 }
-
 /*******************************************************************************************************/
-
-
 void MGPIO_voidWriteData(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8State)
 {
 
@@ -158,11 +143,8 @@ void MGPIO_voidWriteData(u8 Copy_u8PortName ,u8 Copy_u8PinNum ,u8 Copy_u8State)
 	}
 }
 /*******************************************************************************************************/
-
-
 void MGPIO_voidToggleData(u8 Copy_u8PortName ,u8 Copy_u8PinNum)
 {
-
 		switch(Copy_u8PortName)
 		{
 		case GPIOA_PORT :  TOG_BIT(MGPIOA ->ODR,Copy_u8PinNum); break;
@@ -181,11 +163,7 @@ void MGPIO_voidToggleData(u8 Copy_u8PortName ,u8 Copy_u8PinNum)
 		}
 
 }
-
-
 /*******************************************************************************************************/
-
-
 void MGPIO_voidPinLock(u8 Copy_u8PortNum ,u8 Copy_u8PinNum )
 {
   switch(Copy_u8PortNum)	
@@ -237,7 +215,6 @@ void MGPIO_voidPinLock(u8 Copy_u8PortNum ,u8 Copy_u8PinNum )
 }
 
 /*******************************************************************************************************/
-
 void MGPIO_vDirectSetReset(u8 Copy_u8PortName , u8 Copy_u8PinNum, u8 Copy_u8State)
 {
 	if(Copy_u8State == HIGH)
@@ -267,12 +244,11 @@ void MGPIO_vDirectSetReset(u8 Copy_u8PortName , u8 Copy_u8PinNum, u8 Copy_u8Stat
 	}
 }
 /*******************************************************************************************************/
-
-
 void MGPIO_voidSetPinAltFn( u8 Copy_u8PortNum ,u8 Copy_u8PinNum, u8 Copy_u8ALF )
 {
 	if(Copy_u8PinNum <=7U)
 	{
+		/* Alf pins 0:7 */
 		switch(Copy_u8PortNum )
 		{
 			 case GPIOA_PORT  : MGPIOA->AFRL |=(u32)(Copy_u8ALF <<(4U* Copy_u8PinNum)); break ;
@@ -285,9 +261,7 @@ void MGPIO_voidSetPinAltFn( u8 Copy_u8PortNum ,u8 Copy_u8PinNum, u8 Copy_u8ALF )
 		}
 		
 	}
-	// 8 : 15
-	// i need 8 = 0 & 15 = 7
-	
+	/* Alf pins 8:15 */
 	else
 	{
 	switch(Copy_u8PortNum )
@@ -306,8 +280,4 @@ void MGPIO_voidSetPinAltFn( u8 Copy_u8PortNum ,u8 Copy_u8PinNum, u8 Copy_u8ALF )
 
 	
 }
-
-/*#####################################################################################################*/
-/*                                              END OF FUNCTIONS                                       */
-/*#####################################################################################################*/
 

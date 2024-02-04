@@ -6,20 +6,15 @@
 /*******************************************************************************************************/
 /*******************************************************************************************************/
 /*                                      Standard Types LIB                                             */
-/*******************************************************************************************************/
-
 #include "../../Libraries/STD_TYPES.h"
 #include "../../Libraries/BIT_MATH.h"
 
 /*******************************************************************************************************/
 /*                                      MCAL Components                                                */
-/*******************************************************************************************************/
-
-
 #include "MEXTI_private.h"
 #include "MEXTI_interface.h"
 #include "MEXTI_config.h"
-
+/*******************************************************************************************************/
 /*                                      Pointer to Function                                            */
 static void (*EXTI0_CallBack ) (void) =  NULL ;
 static void (*EXTI1_CallBack ) (void) =  NULL ;
@@ -27,14 +22,9 @@ static void (*EXTI2_CallBack ) (void) =  NULL ;
 static void (*EXTI3_CallBack ) (void) =  NULL ;
 static void (*EXTI4_CallBack ) (void) =  NULL ;
 
-
-
-
-
 /*******************************************************************************************************/
 /*                                      Functions Implementations                                      */
 /*******************************************************************************************************/
-
 /* Give The Function The Line To Enable It IntTERPUT  */
 
 void MEXIT_voidEnableEXIT(u8 Copy_u8Line)
@@ -45,14 +35,11 @@ void MEXIT_voidEnableEXIT(u8 Copy_u8Line)
 }
 
 /*******************************************************************************************************/
-
 /* Give The Function The Line To Disable It IntTERPUT  */
 
 void MEXIT_voidDisableEXIT(u8 Copy_u8Line)
 {
-
 	CLR_BIT (EXTI_Ptr ->IMR ,Copy_u8Line);
-
 }
 
 /*******************************************************************************************************/

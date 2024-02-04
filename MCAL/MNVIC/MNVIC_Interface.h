@@ -14,19 +14,9 @@
 /*      08- MNVIC_voidGenerateSoftwareInterrupt                                                        */
 /*******************************************************************************************************/
 
-/*******************************************************************************************************/	
-/*	* What i sell To Customer                                                                          */
-/*		*  The Archictect Give The API	                                                               */
-/*						- The Name Of Function                                                         */
-/*						- What is The Input                                                            */
-/*						- What Is The Output                                                           */
-/*						- Macro                                                                        */
-/*******************************************************************************************************/
-
 /*******************************************************************************************************/
 /*                                   guard of file will call on time in .c                             */
 /*******************************************************************************************************/
-
 #ifndef NVIC_INTERFACE_H
 #define NVIC_INTERFACE_H
 
@@ -37,10 +27,9 @@ typedef enum{
     NVIC_GroupMode_g2s8,
     NVIC_GroupMode_g0s16
 }NVIC_GroupMode_t;
-
-
+/*******************************************************************************************************/
 #define   Reg_div		32
-
+/*******************************************************************************************************/
 /* Macros for peripheral Exceptions Position on vector table*/
 #define	MNVIC_NMI					-14
 #define MNVIC_MemManage				-12
@@ -50,6 +39,7 @@ typedef enum{
 #define MNVIC_Debug_Monitor			-4
 #define MNVIC_PendSV				-2
 #define MNVIC_Systick				-1
+/*******************************************************************************************************/
 /* Macros for peripheral Position on vector table*/
 #define	MNVIC_WWDG					0
 #define MNVIC_EXTI16_PVD			1
@@ -107,12 +97,11 @@ typedef enum{
 #define MNVIC_I2C3_ER				73
 #define MNVIC_FPU					81
 #define MNVIC_SPI4					84
+/*******************************************************************************************************/
 
-
-/*#####################################################################################################*/
+/*******************************************************************************************************/
 /*                                      Function Prototypes                                            */
-/*#####################################################################################################*/
-
+/*******************************************************************************************************/
 		
 
 /*******************************************************************************************************/
@@ -120,9 +109,9 @@ typedef enum{
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidEnableInterrupt(u8 Copy_u8PeripheralID);
@@ -132,22 +121,21 @@ void MNVIC_voidEnableInterrupt(u8 Copy_u8PeripheralID);
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidDisableInterrupt(u8 Copy_u8PeripheralID);
-
 
 /*******************************************************************************************************/
 /*                                      03- MNVIC_voidEnableInterruptPending                          */
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidEnableInterruptPending(u8 Copy_u8PeripheralID);
@@ -157,9 +145,9 @@ void MNVIC_voidEnableInterruptPending(u8 Copy_u8PeripheralID);
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidDisableInterruptPinding(u8 Copy_u8PeripheralID);
@@ -169,9 +157,9 @@ void MNVIC_voidDisableInterruptPinding(u8 Copy_u8PeripheralID);
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> Copy_u8Read >>" Value of flag"                                                                 */
 /*******************************************************************************************************/
 void MNVICE_u8IsInterruptActive(u8 Copy_u8PeripheralID,u8* copy_u8Read);
@@ -181,9 +169,9 @@ void MNVICE_u8IsInterruptActive(u8 Copy_u8PeripheralID,u8* copy_u8Read);
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidInitInterruptGroup(NVIC_GroupMode_t copy_GropMode);
@@ -193,9 +181,9 @@ void MNVIC_voidInitInterruptGroup(NVIC_GroupMode_t copy_GropMode);
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /*   - copy_u8IntGroup/SubGroup :  The Order Of start from 0 to (g-1) or (sg-1) 					   */
 /* 					#*#*#*#  (the lower the num the higher priority it is)   #*#*#*#            	   */
 /* 3- Function Return      -> No Thing                                                                 */
@@ -207,9 +195,9 @@ void MNVIC_voidSetInterruptPriority(u8 Copy_u8PeripheralID, u8 copy_u8IntGroup, 
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_u8PeripheralID , &copy_u8ReadGroup , &copy_u8ReadSupGroup           */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /*   - copy_u8IntGroup/SubGroup :  The Order Of start from 0 to (g-1) or (sg-1) 					   */
 /* 					#*#*#*#  (the lower the num the higher priority it is)   #*#*#*#            	   */
 /* 3- Function Return      -> No Thing                                                                 */
@@ -220,9 +208,9 @@ void MNVIC_voidGetInterruptPriority(u8 Copy_u8PeripheralID, u8* copy_u8ReadGroup
 /*-----------------------------------------------------------------------------------------------------*/
 /* 1- Function Description -> Enable Peripheral Clock                                                  */
 /* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
+/*   - BusName_t      : The Bus Of The Peripheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
+/*                      Detect Which REG To Choice Peripheral From It                                   */
+/*   - Copy_u8PerName :  The Order Of Peripheral On The Selected Reg                                    */
 /* 3- Function Return      -> No Thing                                                                 */
 /*******************************************************************************************************/
 void MNVIC_voidGenerateSoftwareInterrupt(u8 Copy_u8PeripheralID);

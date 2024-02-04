@@ -18,11 +18,11 @@ typedef float  						f32 ;           // 4 Byte
 typedef double  					f64 ;           // 8 Byte
 
 //Null pointer
-#define NULL  		(void*)0
+#define NULL  						(void*)0
 
 //Error status
-#define OK         		1
-#define NOT_OK     		0
+#define OK         					1
+#define NOT_OK     					0
 
 
 #endif

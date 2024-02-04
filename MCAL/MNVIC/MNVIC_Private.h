@@ -11,34 +11,14 @@
 /*******************************************************************************************************/
 /*                                   guard of file will call on time in .c                             */
 /*******************************************************************************************************/
-
-
 #ifndef NVIC_PRIVATE_H
 #define NVIC_PRIVATE_H
 
-
 /*******************************************************************************************************/
 /*                                    Macros Base Address Of NVIC Registers                            */
-/*******************************************************************************************************/
-
-
 #define NVIC_BASE_ADDRESS    0xE000E100
 
 /*******************************************************************************************************/
-/*                                       Register Definitions                                          */
-/*-----------------------------------------------------------------------------------------------------*/
-/*     - Developer can't Edit in it                                                                    */
-/*     - Register _ Defination		                                                                   */
-/*     - Design :                                                                                      */
-/*    				- #define	:	NO                                                                 */
-/*    				- Union		:	NO                                                                 */
-/*    				- Struct	:	YES                                                                */
-/*                                                                                                     */
-/*******************************************************************************************************/
-
-
-
-
 /** NVIC register map type. */
 typedef struct
 {
@@ -56,18 +36,20 @@ typedef struct
 	u32 RESERVED5[644]; 	  /**< Reserved */
 	u32 STIR;                 /**< Software Trigger Interrupt Registers */
 } NVIC_t;
-
-
 /*******************************************************************************************************/
 /*                                   Struct Macros Base Address Of NVIC                                */
-/*******************************************************************************************************/
-
 #define     NVIC_REG    ((volatile NVIC_t*)(NVIC_BASE_ADDRESS))
 //Application interrupt and reset control register
 #define     SCB_AIRCR   (*(volatile u32*) 0xE000ED0C)
-
 /* To write to this register, you must write 0x5FA to the VECTKEY field, otherwise the
 processor ignores the write. */
 #define     VECTKEY     0x05FA0000
+
+
+
+
+
+
+
 
 #endif // GPIO_PRIVATE_H
