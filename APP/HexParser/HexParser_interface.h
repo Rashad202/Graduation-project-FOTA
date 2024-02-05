@@ -24,5 +24,13 @@
 /*******************************************************************************************************/
 void HexParser_voidParseData(u8 * A_pu8Data);
 
+/*******************************************************************************************************/
+/*                                      01- HexParser_voidParseRecord                                	   */
+/*-----------------------------------------------------------------------------------------------------*/
+/* 1- Function Description -> Parse the record.                                                		   */
+/* Parameters (in): uint8* (Holds pointer to buffer record)											   */
+/* Function Return      -> None																		   */	
+/*******************************************************************************************************/
+void HexParser_vParseRecord(u8*Copy_BufRecord);
 
 #endif /* APP_HEXPARSER_INTERFACE_H_ */
