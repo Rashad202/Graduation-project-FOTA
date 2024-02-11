@@ -20,19 +20,14 @@
 #include "HexParser_config.h"
 
 /*  variables  ---------------------------------------------------------*/
+u32 FLASH_BASE_ADDR=0X00000000;
 u16 DataBuffer[100] ;
 
-/* Global variables  END */
 /*******************************************************************************************************/
 /*                                      Functions Implementations                                      */
-/*******************************************************************************************************/
-/*******************************************************************************************************/
-/*                                      00- HexParser_u8Ascii2Hex                                	   */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Converts an ASCII character representing a hexadecimal digit to 		   */
-/*    its corresponding hexadecimal value                   										   */
-/* 2- Function Input       -> A_u8Ascii												                   */
-/* 3- Function Return      -> u8                                                           		       */
+
+
+
 /*******************************************************************************************************/
 static u8 HexParser_u8Ascii2Hex(u8 A_u8Ascii)
 {
@@ -54,12 +49,6 @@ static u8 HexParser_u8Ascii2Hex(u8 A_u8Ascii)
 }
 
 /*******************************************************************************************************/
-/*                                      01- HexParser_voidParseRecord                                	   */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Parse the record.                                                		   */
-/* Parameters (in): uint8* (Holds pointer to buffer record)											   */
-/* Function Return      -> None																		   */	
-/*******************************************************************************************************/
 void HexParser_vParseRecord(u8*Copy_BufRecord)
 {
 	/* Check on record type */
@@ -73,6 +62,13 @@ void HexParser_vParseRecord(u8*Copy_BufRecord)
 
 	case '4':
 		/*set high address part*/
+		u8 digit0,digit1,digit2,digit3 ;
+		digit0 = HexParser_u8Ascii2Hex(Copy_BufRecord[9]);
+		digit1 = HexParser_u8Ascii2Hex(Copy_BufRecord[10]);
+		digit2 = HexParser_u8Ascii2Hex(Copy_BufRecord[11]);
+		digit3 = HexParser_u8Ascii2Hex(Copy_BufRecord[12]);
+
+		FLASH_BASE_ADDR |=(digit0<<28)|(digit1<<24)|(digit2<<20)|(digit3<<16);
 		break;
 
 	case '1':
@@ -85,12 +81,6 @@ void HexParser_vParseRecord(u8*Copy_BufRecord)
 	}
 }
 
-/*******************************************************************************************************/
-/*                                      02- HexParser_voidParseData                                	   */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Parse the hex file..                                                		   */
-/* Parameters (in): uint8* (Holds pointer to buffer record)											   */
-/* Function Return      -> None																		   */	
 /*******************************************************************************************************/
 void HexParser_voidParseData(u8 * A_pu8Data)
 {
@@ -120,6 +110,7 @@ void HexParser_voidParseData(u8 * A_pu8Data)
 
 
 	/* Insert the low address into the least significant 4 bytes */
+	address = address & 0xFFFF0000;
 	address = (FLASH_BASE_ADDR) |
 			  (digit0 << 12)    |
 			  (digit1 << 8 )    |
@@ -143,7 +134,7 @@ void HexParser_voidParseData(u8 * A_pu8Data)
 		 * Load the second byte then first byte using MSB first
 		 * Example: FE BA should be loaded as BA FE
 		 */
-		DataBuffer[i] = (digit0 << 12) | (digit1 << 8 ) | (digit2 << 4 ) | (digit3 << 0 );
+		DataBuffer[i] = (digit2 << 12) | (digit3 << 8 ) | (digit0 << 4 ) | (digit1 << 0 );// 2-3-0-1 insted of 3-2-1-0
 
 	}
 
@@ -151,3 +142,80 @@ void HexParser_voidParseData(u8 * A_pu8Data)
 	MFMI_voidFlashWrite(address, DataBuffer, CC/2);
 }
 
+/*******************************************************************************************************/
+u8 HexParser_CheckSumOfData (u8 * Copy_u8BufData)
+{
+
+
+	/* local variable */
+	u8 CharCount_H_Byte = 0, CharCount_L_Byte = 0 ,CharCount = 0;
+
+	u8 No_ofRecord_Digits_without_CS_digits = 0;
+
+	u8 Sum_of_Digits_without_CS_digits = 0;
+
+	int CheckSum = 0;
+
+	u8 Check_error;
+
+	/*** Getting the character count ***/
+
+	/* Get the high byte */
+	CharCount_H_Byte = HexParser_u8Ascii2Hex(Copy_u8BufData[1]);
+
+	/* Get the low byte */
+	CharCount_L_Byte = HexParser_u8Ascii2Hex(Copy_u8BufData[2]);
+
+	/* Get the character count */
+	CharCount = (CharCount_H_Byte << 4) | CharCount_L_Byte;
+
+
+    /*
+    CharCount_digits = 2 digit
+     Address_digits  = 4 digit
+     Type_digit      = 2 digit
+     so we add 8 to sum of data digits
+    */
+
+    /* Calculate number of digits */
+	No_ofRecord_Digits_without_CS_digits = (CharCount * 2) + 8;
+	/*
+	  Start from 1 to neglect the ':'
+	  Increment by 1 bytes "2 digit"
+	*/
+
+	for (int i = 1 ;i < No_ofRecord_Digits_without_CS_digits; i+=2)
+	{
+		/* Accumulate the sum byte by byte */
+	Sum_of_Digits_without_CS_digits += ( HexParser_u8Ascii2Hex(Copy_u8BufData[i]) << 4) | HexParser_u8Ascii2Hex((Copy_u8BufData[i+1]));
+
+	}
+
+	/*
+	  Checksum is the 2s-complement of the sum of the number of bytes, plus the address plus the data
+	  Add up the number of bytes, the address and all the data and discard any carry to give 8-bit total
+	  Then invert each digit to give 1s-complement by XOR with 0xFF then add 1 to get the 2s-complement
+	 */
+
+	Sum_of_Digits_without_CS_digits = (((Sum_of_Digits_without_CS_digits ^ 0xFF)) + 1);
+
+
+	/*
+	        Get the checkSum byte from Record
+	*/
+	int CheckSum_HByte = HexParser_u8Ascii2Hex(Copy_u8BufData[No_ofRecord_Digits_without_CS_digits+1]);
+	int CheckSum_LByte = HexParser_u8Ascii2Hex(Copy_u8BufData[No_ofRecord_Digits_without_CS_digits+2]);
+	CheckSum = ( CheckSum_HByte << 4) | CheckSum_LByte ;
+
+	/* Compare between Calculated checksum and checksum in record*/
+    if ((CheckSum & 0xFF) == (Sum_of_Digits_without_CS_digits& 0xFF))
+	{
+		Check_error = 1;
+	}
+	else
+	{
+		Check_error = 0;
+	}
+	return Check_error;
+
+}

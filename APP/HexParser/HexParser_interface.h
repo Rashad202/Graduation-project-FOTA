@@ -4,11 +4,9 @@
 /* Data              : 3 Feb 2024                                                                      */
 /* Description       : HexParser_interface.h --> implementations                                       */
 /* Module  Features  :                                                                                 */
-/*      01- HexParser_voidParseData                                                                       */
+/*      00- HexParser_voidParseData                                                                    */
+/*      01- HexParser_voidParseData                                                                    */
 /*******************************************************************************************************/
-
-/*******************************************************************************************************/
-/*                                   guard of file will call on time in .c                             */
 #ifndef APP_HEXPARSER_INTERFACE_H_
 #define APP_HEXPARSER_INTERFACE_H_
 
@@ -32,5 +30,13 @@ void HexParser_voidParseData(u8 * A_pu8Data);
 /* Function Return      -> None																		   */	
 /*******************************************************************************************************/
 void HexParser_vParseRecord(u8*Copy_BufRecord);
+/*******************************************************************************************************/
+/*                                      02- HexParser_CheckSumOfData                              	   */
+/*-----------------------------------------------------------------------------------------------------*/
+/* 1- Function Description -> making checksum for the record.                                  		   */
+/* Parameters (in): uint8* (Holds pointer to buffer record)											   */
+/* Function Return      -> 1 or 0													    			   */
+/*******************************************************************************************************/
+u8 HexParser_CheckSumOfData (u8 * Copy_u8BufData);
 
 #endif /* APP_HEXPARSER_INTERFACE_H_ */
