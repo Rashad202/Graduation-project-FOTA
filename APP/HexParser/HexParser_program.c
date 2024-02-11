@@ -156,7 +156,7 @@ u8 HexParser_CheckSumOfData (u8 * Copy_u8BufData)
 
 	int CheckSum = 0;
 
-	u8 Check_error;
+	u8 Check_No_Error;
 
 	/*** Getting the character count ***/
 
@@ -210,12 +210,12 @@ u8 HexParser_CheckSumOfData (u8 * Copy_u8BufData)
 	/* Compare between Calculated checksum and checksum in record*/
     if ((CheckSum & 0xFF) == (Sum_of_Digits_without_CS_digits& 0xFF))
 	{
-		Check_error = 1;
+		Check_No_Error = No_ERROR;
 	}
 	else
 	{
-		Check_error = 0;
+		Check_No_Error = ERROR;
 	}
-	return Check_error;
+	return Check_No_Error;
 
 }

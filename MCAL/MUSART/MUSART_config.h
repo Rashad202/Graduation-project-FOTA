@@ -44,7 +44,7 @@ typedef enum{
 /*******************************************************************************************************/
 /*****     USART 1 configurations        ******/
 //if you want to use USART 1 Make this enable otherwise its config values will be discarded
-#define USART1_USED             U_DISABLE
+#define USART1_USED             U_ENABLE
 #define USART1_SEND_BREAK       U_DISABLE
 #define USART1_RECEIVER         U_ENABLE
 #define USART1_TRANSMITTER      U_ENABLE
@@ -78,12 +78,12 @@ typedef enum{
 /*******************************************************************************************************/
 /*****     USART 6 configurations        ******/
 //if you want to use USART 6 Make this enable otherwise its config values will be discarded
-#define USART6_USED             U_ENABLE
+#define USART6_USED             U_DISABLE
 #define USART6_SEND_BREAK       U_DISABLE
 #define USART6_RECEIVER         U_ENABLE
 #define USART6_TRANSMITTER      U_ENABLE
 #define USART6_T_COMP_INT       U_DISABLE
-#define USART6_RX_INT           U_ENABLE
+#define USART6_RX_INT           U_DISABLE
 #define USART6_PARITY_ENABLE    U_DISABLE
 #define USART6_PARITY_MODE      U_EVEN_PARITY
 #define USART6_WORD_LEN         U_DATA_8

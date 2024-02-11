@@ -11,189 +11,199 @@
 /*      05- MSTK_VidSetCallBack                                                                        */
 /*******************************************************************************************************/
 
-
-/*#####################################################################################################*/
-/*#####################################################################################################*/
-
 /*******************************************************************************************************/
 /*                                      Standard Types LIB                                             */
-/*******************************************************************************************************/
-
 #include "../../Libraries/STD_TYPES.h"
 #include "../../Libraries/BIT_MATH.h"
 
-
-/*#####################################################################################################*/
-/*#####################################################################################################*/
-
 /*******************************************************************************************************/
 /*                                      MCAL Components                                                */
-/*******************************************************************************************************/
-
-#include "MSYSTICK_private.h"
-#include "MSYSTICK_interface.h"
-#include "MSYSTICK_config.h"
-
-/*#####################################################################################################*/
-/*#####################################################################################################*/
+#include "MSYSTICK_Private.h"
+#include "MSYSTICK_Interface.h"
+#include "MSYSTICK_Config.h"
 
 /*******************************************************************************************************/
-/*                                      Functions Implementations                                      */
-/*******************************************************************************************************/
-
-/*#####################################################################################################*/
-/*#####################################################################################################*/
-
-/*******************************************************************************************************/
-/*                                      00- SysTick_Handler                                            */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
-/*******************************************************************************************************/
-
-
-
-void ( * MSTK_CallBack ) ( void );
-
-void SysTick_Handler(void){
-
-	MSTK_CallBack();
-
-}
-
-
+static void (* MSTK_CallBack) (void) = NULL;
+static u8	MSTK_u8ModeOfInterval;
 
 /*******************************************************************************************************/
 /*                                      01- MSTK_voidInit                                              */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
-/*******************************************************************************************************/
-
-
 void MSTK_voidInit( void ){
 
-	// Enable Systick Interrupt  -  Clock = AHB / 8 - Stop Systic
-	MSTK->CTRL = 0x00000002;
+	#if CLK_SOURCE_CONFIG == PROCCESOR_CLK_AHB
+	SET_BIT(MSTK->CTRL , CLKSOURCE);
+	#elif CLK_SOURCE_CONFIG == PROCCESOR_CLK_AHB_DIV8
+	CLR_BIT(MSTK->CTRL , CLKSOURCE);
+	#endif
 }
 
 /*******************************************************************************************************/
 /*                                      02- MSTK_voidStart                                              */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
-/*******************************************************************************************************/
-
-
 void MSTK_voidStart( u32 Copy_PreloadValue ){
 
-	// AHB = EXT = 8MHZ & CLOCK OF MSTK = AHB / 8 = 8MHZ / 8 = 1MHZ = 1 Micro For Each Count
 	//Load Reload Value
-	MSTK->LOAD = Copy_PreloadValue - 1;
-	//Clear Val Register
+	MSTK->LOAD = Copy_PreloadValue;
+	/* Clear Val Register     */
 	MSTK->VAL  = 0 ;
-	//Enable Systick
+	/* Enable Systick    */
 	SET_BIT( MSTK->CTRL , 0 );
+	/*  POLL On the Counter Flag */
+	while(GET_BIT( MSTK->CTRL , COUNTFLAG ) == 0);
+
+	/*		Stop Timer 						*/
+	CLR_BIT(MSTK->CTRL , 0);
+	/* Clear Load Reload      */
+	MSTK->LOAD = 0;
+	/* Clear Val Register     */
+	MSTK->VAL  = 0 ;
 
 }
 
 /*******************************************************************************************************/
-/*                                      03- MSTK_voidINTStatus                                              */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
+/*                                      03- MSTK_voidStopInterval                                              */
+void MSTK_voidStopInterval(void) 
+{
+    /*	Stop Timer 	*/
+	CLR_BIT(MSTK->CTRL , 0);
+	/* Clear Load Reload      */
+	MSTK->LOAD = 0;
+	/* Clear Val Register     */
+	MSTK->VAL  = 0 ;
+}
 /*******************************************************************************************************/
+/*                                      03- MSTK_voidReSetInterval                                             */
+void MSTK_voidReSetInterval( u32 Copy_PreloadValue ){
 
+	/* Clear Load Reload      */
+	MSTK->LOAD = 0;
+	/* Clear Val Register     */
+	MSTK->VAL  = 0 ;
 
-void MSTK_voidINTStatus( u8 Copy_u8Status ){
+	//Load Reload Value
+	MSTK->LOAD = Copy_PreloadValue;
+	/* Clear Val Register     */
+	MSTK->VAL  = 0 ;
+	/* Enable Systick    */
+	SET_BIT( MSTK->CTRL , 0 );
+	/*  POLL On the Counter Flag */
+	while(GET_BIT( MSTK->CTRL , COUNTFLAG ) == 0);
 
-	MSTK->CTRL &= ~( 1 << 1 );
-	MSTK->CTRL |=  ( Copy_u8Status << 1 );
+	/*		Stop Timer 						*/
+	CLR_BIT(MSTK->CTRL , 0);
+	/* Clear Load Reload      */
+	MSTK->LOAD = 0;
+	/* Clear Val Register     */
+	MSTK->VAL  = 0 ;
 
 }
 
 /*******************************************************************************************************/
-/*                                      04- MSTK_u8ReadFlag                                            */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
+/*                                      04- MSTK_voidSetIntervalSingle                                              */
+void	MSTK_voidSetIntervalSingle(u32 Ticks,void (*Copy_ptr)(void))
+{
+	/*		Load Ticks to Load Register		*/
+	MSTK->LOAD	= Ticks;
+	/*		Start Timer 					*/
+	SET_BIT(MSTK->CTRL , 0);
+	/*		Save CallBack					*/
+	MSTK_CallBack = Copy_ptr;
+	/*		Software Flage to indicate which callback will execute	*/
+	MSTK_u8ModeOfInterval = MSTK_SINGLE_INTERVAL;
+	/*		SysTick Interrupt Enable PIE	*/
+	SET_BIT(MSTK->CTRL , 1);
+
+}
+
 /*******************************************************************************************************/
+/*                                      05- MSTK_voidSetIntervalPeriodic                                              */
+void	MSTK_voidSetIntervalPeriodic(u32 Ticks,void (*Copy_ptr)(void))
+{
+	/*		Load Ticks to Load Register		*/
+	MSTK->LOAD	= Ticks;
+	/*		Start Timer 					*/
+	SET_BIT(MSTK->CTRL , 0);
+	/*		Save CallBack					*/
+	MSTK_CallBack = Copy_ptr;
+	/*		Software Flage to indicate which callback will execute	*/
+	MSTK_u8ModeOfInterval = MSTK_PERIOD_INTERVAL;
+	/*		SysTick Interrupt Enable PIE	*/
+	SET_BIT(MSTK->CTRL , 1);
+
+}
+
+/*******************************************************************************************************/
+/*                                      06- MSTK_u8ReadFlag                                            */
 
 u8 MSTK_u8ReadFlag( void ){
 
-	return ( GET_BIT( MSTK->CTRL , 16 ) );
+	return ( GET_BIT( MSTK->CTRL , COUNTFLAG ) );
 
 }
+
 /*******************************************************************************************************/
-/*                                      05- MSTK_voidSetCallBack                                       */
-/*-----------------------------------------------------------------------------------------------------*/
-/* 1- Function Description -> Enable Peripheral Clock                                                  */
-/* 2- Function Input       -> Copy_uBusName ,   Copy_u8PerNum                                          */
-/*   - BusName_t      : The Bus Of The Prepheral ( AHB1 , AHB2 , APB1 , APB2 ) Every One               */
-/*                      Detect Which REG To Choice Pripheral From It                                   */ 
-/*   - Copy_u8PerName :  The Order Of Prepheral On The Selected Reg                                    */                      
-/* 3- Function Return      -> No Thing                                                                 */
+/*                                      07- MSTK_u32GetCurrentValue                                              */
+u32 MSTK_u32GetCurrentValue(void){
+	u32 local_u32CurrentValue;
+	local_u32CurrentValue = MSTK->VAL;
+	return local_u32CurrentValue;
+}
+
 /*******************************************************************************************************/
-
-
-void MSTK_voidSetCallBack( void (*ptr)(void) ){
-
-	MSTK_CallBack = ptr;
+/*                                      08- MSTK_u32GetCurrentValue                                              */
+u32 MSTK_u32GetElapsedTime(void){
+	u32 local_u32ElapsedTime;
+	local_u32ElapsedTime = MSTK->LOAD - MSTK->VAL;
+	return local_u32ElapsedTime;
 }
 
-
-void MSTK_voidDelayMs(u32 Copy_u32Delay){
-
-	MSTK_voidInit();
-	/* Disable INT */
-	MSTK_voidINTStatus( MSTK_INT_DIS );
-	MSTK_voidStart( Copy_u32Delay * 1000 );
-	/* Wiat Flag Polling */
-	while( MSTK_u8ReadFlag() == 0 );
-}
-
-
+/*******************************************************************************************************/
+/*                                      09- _delay_ms                                              */
 void _delay_ms( u32 Copy_u32Time ){
 
 	MSTK_voidInit();
-	/* Disable INT */
-	MSTK_voidINTStatus( MSTK_INT_DIS );
+	/*	1- Disable the Interrupt 	*/
+	CLR_BIT(MSTK->CTRL , 1);
+	
 	MSTK_voidStart( Copy_u32Time * 2000 );
-	/* Wiat Flag Polling */
-	while( MSTK_u8ReadFlag() == 0 );
+	/*    Stop Timer      */
+	MSTK_voidStopInterval();
+
 }
 
-
-/* Suppose That The Clock System (AHB) = 16MHZ EXT & The Systick Clock Is = AHB/8 */
+/*******************************************************************************************************/
+/*                                      10- _delay_us                                              */
 void _delay_us( u32 Copy_u32Time ){
 
 	MSTK_voidInit();
-	/* Disable INT */
-	MSTK_voidINTStatus( MSTK_INT_DIS );
-	MSTK_voidStart( Copy_u32Time*2);
-	/* Wiat Flag Polling */
-	while( MSTK_u8ReadFlag() == 0 );
+	/*	1- Disable the Interrupt 	*/
+	CLR_BIT(MSTK->CTRL , 1);
+	
+	MSTK_voidStart( Copy_u32Time * 2);
+	/*    Stop Timer      */
+	MSTK_voidStopInterval();
 }
 
 
+/*******************************************************************************************************/
+/*                                      //Core Peripheral                                              */
 
+void	SysTick_Handler(void)
+{
+	u8 Local_u8Temp = 0;
+	if(MSTK_u8ModeOfInterval == MSTK_SINGLE_INTERVAL)
+	{
+		/*	1- Disable the Interrupt 	*/
+			CLR_BIT(MSTK->CTRL , 1);
+		/*	2- Stop the timer			*/
+			CLR_BIT(MSTK->CTRL , 0);
+			MSTK->LOAD	= 0;
+			MSTK->VAL	= 0;
+	}
+	 /*Execute Action to be done after the time passed*/
+	if(MSTK_CallBack !=NULL)
+	{	
+	MSTK_CallBack();
+	}
+	/*	Clear Interrupt Flag by reading the Flag */
+	Local_u8Temp	=	GET_BIT(MSTK->CTRL , COUNTFLAG);
+}

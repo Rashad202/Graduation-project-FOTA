@@ -156,10 +156,18 @@ void MUSART_u8Send_Data(u8 copy_u8Index , u8 *copy_u8Data){
 	}
 }
 /*******************************************************************************************************/
-void MUSART_u8Read_Byte(u8 copy_u8Index,u8 *copy_u8Data){
+u8 MUSART_u8Receive_Byte(u8 copy_u8Index,u8 *copy_u8Data){
 	USART_REG _USART_ = MUSART_SetUSART(copy_u8Index);
-	//while(0==GET_BIT(_USART_->SR, 5));
-	*copy_u8Data= _USART_->DR;
+	u8 Statue = Receive;
+	if( GET_BIT( _USART_->SR ,5) == 1 )
+	{
+		*copy_u8Data= _USART_->DR;
+	}
+	else
+	{
+		Statue = NoReceive ;
+	}
+		return Statue ;
 }
 
 /*******************************************************************************************************/

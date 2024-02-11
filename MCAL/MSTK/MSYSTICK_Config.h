@@ -14,7 +14,15 @@
 #ifndef MSTK_CONFIG_H_
 #define MSTK_CONFIG_H_
 
+#define PROCCESOR_CLK_AHB          1
+#define PROCCESOR_CLK_AHB_DIV8     2
 
+#define CLK_SOURCE_CONFIG          PROCCESOR_CLK_AHB_DIV8
 
+#define CLKSOURCE                  2
+#define COUNTFLAG                  16
+
+#define MSTK_SINGLE_INTERVAL		1
+#define	MSTK_PERIOD_INTERVAL		0
 
 #endif /* MSTK_CONFIG_H_ */
