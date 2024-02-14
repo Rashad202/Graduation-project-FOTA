@@ -8,8 +8,5 @@
 #ifndef HEXPARSER_HEXPARSER_PRIVATE_H_
 #define HEXPARSER_HEXPARSER_PRIVATE_H_
 
-/*   Macros Base Address Of FMI Registers   */
-//#define FLASH_BASE_ADDR     0x08000000
-
 
 #endif /* HEXPARSER_HEXPARSER_PRIVATE_H_ */

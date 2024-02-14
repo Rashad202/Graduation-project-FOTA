@@ -12,13 +12,20 @@
 #ifndef APP_BOOTLOADER_BOOTLOADER_INTERFACE_H_
 #define APP_BOOTLOADER_BOOTLOADER_INTERFACE_H_
 
+/*******************************************************************************************************/
+/*                                      MCAL Components                                                */
+#include "BootLoader_config.h"
 
-#define SECTOR_0	0
-#define SECTOR_1	1
-#define SECTOR_2	2
-#define SECTOR_3	3
-#define SECTOR_4	4
-#define SECTOR_5	5
+#define APP_FLAG_ADD	 APP_1_2_FLAG_ADD
+#define UpDate_Flag	     *((volatile u32 *)(APP_FLAG_ADD))
+
+#define No_APP 		0xFFFFFFFF
+#define APP_1_ID	0xAAAA
+#define APP_2_ID	0xBBBB
+
+#define APP_1_MID	0xFFFFAAAA
+#define APP_2_MID	0xFFFFBBBB
+
 /*******************************************************************************************************/
 /*                                      Function Prototypes                                            */
 /*******************************************************************************************************/

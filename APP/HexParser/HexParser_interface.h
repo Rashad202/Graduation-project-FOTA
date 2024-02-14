@@ -10,11 +10,18 @@
 #ifndef APP_HEXPARSER_INTERFACE_H_
 #define APP_HEXPARSER_INTERFACE_H_
 
+/*******************************************************************************************************/
+/*                                      MCAL Components                                                */
 
+#define No_APP 		0xFFFFFFFF
+#define APP_1_MID	0xFFFFAAAA
+#define APP_2_MID	0xFFFFBBBB
+
+#define APP_1_ID	0xAAAA
+#define APP_2_ID	0xBBBB
 
 #define ERROR 		 0
 #define No_ERROR	 1
-
 /*******************************************************************************************************/
 /*                                      Function Prototypes                                            */
 /*******************************************************************************************************/
