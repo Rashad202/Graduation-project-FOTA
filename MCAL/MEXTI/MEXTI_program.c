@@ -27,7 +27,7 @@ static void (*EXTI4_CallBack ) (void) =  NULL ;
 /*******************************************************************************************************/
 /* Give The Function The Line To Enable It IntTERPUT  */
 
-void MEXIT_voidEnableEXIT(u8 Copy_u8Line)
+void MEXTI_voidEnableEXTI(u8 Copy_u8Line)
 {
 
 	SET_BIT (EXTI_Ptr ->IMR ,Copy_u8Line);
@@ -37,7 +37,7 @@ void MEXIT_voidEnableEXIT(u8 Copy_u8Line)
 /*******************************************************************************************************/
 /* Give The Function The Line To Disable It IntTERPUT  */
 
-void MEXIT_voidDisableEXIT(u8 Copy_u8Line)
+void MEXTI_voidDisableEXTI(u8 Copy_u8Line)
 {
 	CLR_BIT (EXTI_Ptr ->IMR ,Copy_u8Line);
 }
@@ -48,7 +48,7 @@ void MEXIT_voidDisableEXIT(u8 Copy_u8Line)
 // If Interrput Enable (PIE) ON This Line And EXTI_IMR Line Writing By '1' , When it is Set To '0' Set Corresponding Pending
 /* IMR = 1 And PR =0 FOR 0:15 Now You Will Have Software Trigger & And It Clear By Put 1 At PR */
 
-void MEXIT_voidSoftwareInterrput(u8 Copy_u8Line)
+void MEXTI_voidSoftwareInterrput(u8 Copy_u8Line)
 {
 	SET_BIT(EXTI_Ptr->SWIER , Copy_u8Line);								  // It will Be Clear Alone
 

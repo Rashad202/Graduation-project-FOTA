@@ -49,7 +49,7 @@ typedef enum{
 #define USART1_RECEIVER         U_ENABLE
 #define USART1_TRANSMITTER      U_ENABLE
 #define USART1_T_COMP_INT       U_DISABLE
-#define USART1_RX_INT           U_ENABLE
+#define USART1_RX_INT           U_DISABLE
 #define USART1_PARITY_ENABLE    U_DISABLE
 #define USART1_PARITY_MODE      U_EVEN_PARITY
 #define USART1_WORD_LEN         U_DATA_8

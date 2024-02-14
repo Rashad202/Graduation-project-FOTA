@@ -66,7 +66,7 @@ void MEXTI_voidDisableEXTI(u8 Copy_u8Line);
 /*******************************************************************************************************/
 /***********	Function Make SoftWare Interrput				***********/
 
-void MEXIT_voidSoftwareInterrput(u8 Copy_u8Line);
+void MEXTI_voidSoftwareInterrput(u8 Copy_u8Line);
 
 /*******************************************************************************************************/
 /***********	Function Take A Pointer To Function				***********/
