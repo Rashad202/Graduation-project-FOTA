@@ -1,0 +1,6 @@
+../Src/MCAL/MRCC/MRCC_program.c:23:6:MRCC_voidEnablePeripheralClock	5
+../Src/MCAL/MRCC/MRCC_program.c:39:6:MRCC_voidDisablePeripheralClock	5
+../Src/MCAL/MRCC/MRCC_program.c:54:6:MRCC_voidEnableSecuritySystem	1
+../Src/MCAL/MRCC/MRCC_program.c:62:6:MRCC_voidDisableSecuritySystem	1
+../Src/MCAL/MRCC/MRCC_program.c:69:6:MRCC_voidInitSystemClk	1
+../Src/MCAL/MRCC/MRCC_program.c:140:6:MRCC_voidInitClock	9

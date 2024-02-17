@@ -74,36 +74,28 @@ int main(void)
 	/*Initialize the LEDS*/
 	LED_Init(&Led_1);
 	LED_Init(&Led_3);
-
-	/*begin */
+									/*begin */
 	LED_On(&Led_1);
-//
+
+	/*check on the currant App */
 	if ( UpDate_Flag == No_APP )
 	{
-		// determined which App active
-		CurrantAPP=0;
-		// determined which App will boot
-		UpdateAPP =1;
-
+		CurrantAPP=0;// determined which App active
+		UpdateAPP =1;// determined which App will boot
 	}
-	//  app1 is active
 	else if ( UpDate_Flag == APP_1_MID )
 	{
-		// determined which App active
-		CurrantAPP=1;
-		// determined which App will boot
-		UpdateAPP =2;
+		CurrantAPP=1;// determined which App active
+		UpdateAPP =2;// determined which App will boot
 	}
 	else if (UpDate_Flag == APP_2_MID )
 	{
-		// determined which App active
-		CurrantAPP=2;
-		// determined which App will boot
-		UpdateAPP =1;
+		CurrantAPP=2;// determined which App active
+		UpdateAPP =1;// determined which App will boot
 	}
-//
-	MUSART_u8Send_Data(USART1,(u8*)"FOTA (v 1.0.0) ");
-	MUSART_u8Send_Data(USART1,MUSART_NewLine);
+
+	MUSART_u8Send_Data(USART1,(u8*)"BL_READY");
+	//MUSART_u8Send_Data(USART1,MUSART_NewLine);
 
 	u8 LOC_u8RecStatus = NoReceive;
 	MSTK_voidSetIntervalSingle((u32)15000000,Func_CallBack);//to back to the APP if an error happen
@@ -123,7 +115,6 @@ int main(void)
 						MFMI_voidSectorErase(SECTOR_4);
 					}
 					else if(UpdateAPP==2){
-						//MUSART_u8Send_Data(USART1,(u8 *)"sector 5 errase");
 						MFMI_voidSectorErase(SECTOR_5);
 					}
 					/*Set WriteReq Flag = 0 */
@@ -139,11 +130,10 @@ int main(void)
 				}
 				else{
 					LED_On(&Led_2);
-					MUSART_u8Send_Data(USART1,(u8 *)"Not ok");
+					// for depug we will ask the getway to send it again  #### still under test ####
+					MUSART_u8Send_Data(USART1,(u8 *)"Not_ok");
 
-					// for depug we will ask the getway to send it again
-					//MFMI_voidSectorErase(SECTOR_5);
-					MSTK_voidSetIntervalSingle( 1000000 , Func_CallBack);
+					MSTK_voidSetIntervalSingle( 1 , Func_CallBack);
 				}
 
 				u8RecCounter = 0 ;
@@ -153,8 +143,9 @@ int main(void)
 			if( u8RecBuffer[8] == '1' ){
 				/*wait 1 sec then jump to application code*/
 				CurrantAPP=UpdateAPP;
-				MSTK_voidSetIntervalSingle( 1000000 , Func_CallBack );
+				MSTK_voidSetIntervalSingle( 1 , Func_CallBack );
 				LED_On(&Led_3); //indicate to successful flashing
+				// send somthing to show on the LCD
 			}
 		}
 	}
@@ -170,26 +161,21 @@ void Func_CallBack(void){
 	switch(CurrantAPP)
 	{
 	case 0:
-		MUSART_u8Send_Data(USART1,(u8 *)" ---NO APPs--- ");
-		MUSART_u8Send_Data(USART1,MUSART_NewLine);
+		//MUSART_u8Send_Data(USART1,(u8 *)" ---NO APPs--- ");
 		TimeOutFlag = 0;
 		MSTK_voidReSetInterval((u32)15000000);
 		break;
 
 	case 1:
-		MUSART_u8Send_Data(USART1,(u8 *)" ---APP1_S4--- ");
-		MUSART_u8Send_Data(USART1,MUSART_NewLine);
-
-		MFMI_voidSectorErase(3);
+		//MUSART_u8Send_Data(USART1,(u8 *)" ---APP1_S4--- ");
+		MFMI_voidSectorErase(SECTOR_3);
 		MFMI_voidFlashWrite(APP_FLAG_ADD,&APP_1,1);
 		MSTK_voidStopInterval();
 		break;
 
 	case 2:
-		MUSART_u8Send_Data(USART1,(u8 *)" ---APP2_S5--- ");
-		MUSART_u8Send_Data(USART1,MUSART_NewLine);
-
-		MFMI_voidSectorErase(3);
+		//MUSART_u8Send_Data(USART1,(u8 *)" ---APP2_S5--- ");
+		MFMI_voidSectorErase(SECTOR_3);
 		MFMI_voidFlashWrite(APP_FLAG_ADD,&APP_2,1);
 		MSTK_voidStopInterval();
 		break;
@@ -204,13 +190,11 @@ void Jumper(void){
 		break;
 
 	case 1:
-		//MSTK_u8ReadFlag();
 		Disables();
 		BL_voidJumpToAPP_1();
 		break;
 
 	case 2:
-		//MSTK_u8ReadFlag();
 		Disables();
 		BL_voidJumpToAPP_2();
 		break;
@@ -218,19 +202,14 @@ void Jumper(void){
 }
 
 void Disables (void){
-	/*	turn off BootLoader led*/
+	/*	turn off BootLoader LEDs and peripherals*/
 	LED_Off(&Led_1);
-	MNVIC_voidDisableInterrupt(MNVIC_USART1);
+	LED_Off(&Led_3);
+
 	MUSART_voidDisable(USART1);
 
 	MRCC_voidDisablePeripheralClock(AHB1,GPIOA_PORT);
 	MRCC_voidDisablePeripheralClock(APB2,PERIPHERAL_EN_USART1);
-
-	//MEXTI_voidDisableEXTI(9);
-	//MEXTI_voidDisableEXTI(10);
-	//__disable_irq();
-	//MSTK_voidStopInterval();
-	//MSTK_u8ReadFlag();
 }
 
 

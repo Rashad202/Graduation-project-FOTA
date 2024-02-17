@@ -1,0 +1,4 @@
+../Src/APP/HexParser/HexParser_program.c:31:11:HexParser_u8Ascii2Hex	24	static
+../Src/APP/HexParser/HexParser_program.c:51:6:HexParser_vParseRecord	16	static
+../Src/APP/HexParser/HexParser_program.c:103:6:HexParser_voidParseData	32	static
+../Src/APP/HexParser/HexParser_program.c:182:4:HexParser_CheckSumOfData	48	static
