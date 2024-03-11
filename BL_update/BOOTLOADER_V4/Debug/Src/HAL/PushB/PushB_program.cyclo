@@ -1,3 +1,0 @@
-../Src/HAL/PushB/PushB_program.c:37:6:PushB_Init	1
-../Src/HAL/PushB/PushB_program.c:53:6:PushB_DeInit	1
-../Src/HAL/PushB/PushB_program.c:68:4:PushB_Read	1

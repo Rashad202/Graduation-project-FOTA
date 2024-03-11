@@ -1,4 +1,0 @@
-../Src/APP/HexParser/HexParser_program.c:31:11:HexParser_u8Ascii2Hex	5
-../Src/APP/HexParser/HexParser_program.c:51:6:HexParser_vParseRecord	7
-../Src/APP/HexParser/HexParser_program.c:103:6:HexParser_voidParseData	7
-../Src/APP/HexParser/HexParser_program.c:182:4:HexParser_CheckSumOfData	3

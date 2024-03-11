@@ -1,2 +1,0 @@
-../Src/APP/BootLoader/BootLoader_program.c:27:6:BL_voidJumpToAPP_1	16	static
-../Src/APP/BootLoader/BootLoader_program.c:36:6:BL_voidJumpToAPP_2	16	static
