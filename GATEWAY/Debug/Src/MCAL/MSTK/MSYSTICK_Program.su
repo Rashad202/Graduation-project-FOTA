@@ -1,0 +1,12 @@
+../Src/MCAL/MSTK/MSYSTICK_Program.c:31:6:MSTK_voidInit	4	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:42:6:MSTK_voidStart	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:64:6:MSTK_voidStopInterval	4	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:75:6:MSTK_voidReSetInterval	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:102:6:MSTK_voidSetIntervalSingle	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:120:6:MSTK_voidSetIntervalPeriodic	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:138:4:MSTK_u8ReadFlag	4	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:146:5:MSTK_u32GetCurrentValue	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:154:5:MSTK_u32GetElapsedTime	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:162:6:_delay_ms	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:176:6:_delay_us	16	static
+../Src/MCAL/MSTK/MSYSTICK_Program.c:191:6:SysTick_Handler	16	static

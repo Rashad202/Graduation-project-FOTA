@@ -1,0 +1,9 @@
+../Src/MCAL/MNVIC/MNVIC_Program.c:33:6:MNVIC_voidEnableInterrupt	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:42:6:MNVIC_voidDisableInterrupt	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:51:6:MNVIC_voidEnableInterruptPending	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:60:6:MNVIC_voidDisableInterruptPinding	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:69:6:MNVICE_u8IsInterruptActive	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:78:6:MNVIC_voidInitInterruptGroup	1
+../Src/MCAL/MNVIC/MNVIC_Program.c:90:6:MNVIC_voidSetInterruptPriority	6
+../Src/MCAL/MNVIC/MNVIC_Program.c:116:6:MNVIC_voidGetInterruptPriority	6
+../Src/MCAL/MNVIC/MNVIC_Program.c:145:6:MNVIC_voidGenerateSoftwareInterrupt	1

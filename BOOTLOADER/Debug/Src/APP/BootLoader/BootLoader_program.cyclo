@@ -1,0 +1,2 @@
+../Src/APP/BootLoader/BootLoader_program.c:27:6:BL_voidJumpToAPP_1	1
+../Src/APP/BootLoader/BootLoader_program.c:36:6:BL_voidJumpToAPP_2	1
