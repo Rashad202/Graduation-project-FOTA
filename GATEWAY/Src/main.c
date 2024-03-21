@@ -30,8 +30,12 @@
 #define ENABLE		 1
 #define DISABLE		 0
 
+#define USART_COMM	 1
+#define CAN_COMM	 2
+#define GW_communication	USART_COMM
+
 #define GW_DEBUGGING 		DISABLE
-#define GW_IMT_DEBUGGING 	ENABLE
+#define GW_IMT_DEBUGGING 	DISABLE
 /* externs ------------------------------------------------------------------*/
 /* USER CODE BEGIN externs */
 extern const LedX_t Led_3;
@@ -91,6 +95,9 @@ int main(void)
 
 	/* begin ---------------------------------------------------------*/
 	LED_Off(&Led_3);
+	/*Defending on the used communication protocol*/
+#if (GW_communication == USART_COMM)
+
 #if	(GW_DEBUGGING == ENABLE)
 	MUSART_u8Send_Data(USART6,(u8*)"---GETWAY_READY---");		//---
 	MUSART_u8Send_Data(USART6,MUSART_NewLine);				 	//---
@@ -153,7 +160,7 @@ int main(void)
 #if	(GW_IMT_DEBUGGING == ENABLE)
 				MUSART_u8Send_Data(USART6,(u8 *)"ok");
 #else
-				MUSART_u8Send_Byte(USART6,'K');
+				MUSART_u8Send_Byte(USART6,'O');
 #endif
 			}
 			else if (u8RecBuffer_1=='N' ) {	//error in the record
@@ -187,7 +194,7 @@ int main(void)
 #if	(GW_IMT_DEBUGGING == ENABLE)
 				MUSART_u8Send_Data(USART6,(u8 *)"ok");
 #else
-				MUSART_u8Send_Byte(USART6,'K');
+				MUSART_u8Send_Byte(USART6,'O');
 #endif
 			}
 			else if (u8RecBuffer_2=='N' ) {	//error in the record
@@ -210,6 +217,11 @@ int main(void)
 			}
 		}
 	}
+#endif
+
+#if (GW_communication == CAN_COMM)
+	/*for CAN communication*/
+#endif
 }
 
 
@@ -226,10 +238,10 @@ void Reset_Flags(void)
 
 /* GIDE for the characters send from the GETWAY -------------------------*/
 /*
-	'B'	---		ACK to inform the ESP that the node BOOTLOADER respond
-	'K'	---		ACK to inform the ESP that the node BOOTLOADER received the record correct
-	'N'	---		ACK to inform the ESP that the node BOOTLOADER received the record wrong
-	'D'	---		ACK to inform the ESP that the node BOOTLOADER received the last record
-	'F'	---		ACK to inform the ESP that the node BOOTLOADER received failed 3 times
+	'B'	---	ACK to inform the ESP that the node BOOTLOADER respond					  'BOOTLOADER'
+	'O'	---	ACK to inform the ESP that the node BOOTLOADER received the record correct'OK'
+	'N'	---	ACK to inform the ESP that the node BOOTLOADER received the record wrong  'NO'
+	'D'	---	ACK to inform the ESP that the node BOOTLOADER received the last record   'DONE'
+	'F'	---	ACK to inform the ESP that the node BOOTLOADER received failed 3 times	  'FAILED'
  */
 
