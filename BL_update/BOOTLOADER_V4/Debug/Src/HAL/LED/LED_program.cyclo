@@ -1,5 +1,0 @@
-../Src/HAL/LED/LED_program.c:39:6:LED_Init	1
-../Src/HAL/LED/LED_program.c:54:6:LED_DeInit	1
-../Src/HAL/LED/LED_program.c:69:6:LED_On	1
-../Src/HAL/LED/LED_program.c:84:6:LED_Off	1
-../Src/HAL/LED/LED_program.c:99:6:Led_Toggle	1

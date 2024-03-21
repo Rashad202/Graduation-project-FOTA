@@ -1,5 +1,0 @@
-../Src/HAL/LED/LED_program.c:39:6:LED_Init	16	static
-../Src/HAL/LED/LED_program.c:54:6:LED_DeInit	16	static
-../Src/HAL/LED/LED_program.c:69:6:LED_On	16	static
-../Src/HAL/LED/LED_program.c:84:6:LED_Off	16	static
-../Src/HAL/LED/LED_program.c:99:6:Led_Toggle	16	static
