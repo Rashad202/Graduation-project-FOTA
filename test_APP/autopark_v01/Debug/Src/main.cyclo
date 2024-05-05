@@ -1,0 +1,3 @@
+../Src/main.c:55:5:main	9
+../Src/main.c:204:6:RECIVE_INT	5
+../Src/main.c:237:6:WWDT_voidMakeSoftWareReset	1

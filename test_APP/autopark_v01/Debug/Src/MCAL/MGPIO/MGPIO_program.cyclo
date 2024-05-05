@@ -1,0 +1,10 @@
+../Src/MCAL/MGPIO/MGPIO_program.c:21:6:MGPIO_voidSetPinMode	7
+../Src/MCAL/MGPIO/MGPIO_program.c:35:6:MGPIO_voidSetPinOutPutType	7
+../Src/MCAL/MGPIO/MGPIO_program.c:50:6:MGPIO_voidSetPinOutSpeed	7
+../Src/MCAL/MGPIO/MGPIO_program.c:64:6:MGPIO_voidSetPullType	7
+../Src/MCAL/MGPIO/MGPIO_program.c:80:4:MGPIO_u8ReadData	7
+../Src/MCAL/MGPIO/MGPIO_program.c:103:6:MGPIO_voidWriteData	14
+../Src/MCAL/MGPIO/MGPIO_program.c:146:6:MGPIO_voidToggleData	7
+../Src/MCAL/MGPIO/MGPIO_program.c:167:6:MGPIO_voidPinLock	13
+../Src/MCAL/MGPIO/MGPIO_program.c:218:6:MGPIO_vDirectSetReset	14
+../Src/MCAL/MGPIO/MGPIO_program.c:247:6:MGPIO_voidSetPinAltFn	14

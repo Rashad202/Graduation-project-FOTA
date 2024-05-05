@@ -1,0 +1,2 @@
+../Src/HAL/Servo_motor/Servo_motor_program.c:22:6:HSERVO_vServoInit	1
+../Src/HAL/Servo_motor/Servo_motor_program.c:36:6:HSERVO_vServoDeg	1

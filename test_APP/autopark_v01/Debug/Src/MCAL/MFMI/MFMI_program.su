@@ -1,0 +1,3 @@
+../Src/MCAL/MFMI/MFMI_program.c:24:6:MFMI_voidEraseAppArea	4	static
+../Src/MCAL/MFMI/MFMI_program.c:47:6:MFMI_voidSectorErase	16	static
+../Src/MCAL/MFMI/MFMI_program.c:76:6:MFMI_voidFlashWrite	32	static
