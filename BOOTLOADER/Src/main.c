@@ -20,7 +20,7 @@
 #include "MCAL/MUSART/MUSART_Interface.h"
 #include "MCAL/MFMI/MFMI_interface.h"
 
-#include "HAL/LED/LED_interface.h"
+//#include "HAL/LED/LED_interface.h"
 
 #include "APP/HexParser/HexParser_interface.h"
 #include "APP/BootLoader/BootLoader_interface.h"
@@ -30,7 +30,7 @@
 /*                                      MCAL Components                                                */
 /* externs ------------------------------------------------------------------*/
 /* USER CODE BEGIN externs */
-extern const LedX_t Led_1,Led_2,Led_3;
+//extern const LedX_t Led_0;
 
 /* USER CODE END externs */
 /* Global variables  ---------------------------------------------------------*/
@@ -61,6 +61,9 @@ int main(void)
 {
 	/*Initialize System Clock to be 16MHz from HSI*/
 	MRCC_voidInitSystemClk();
+	/*SysTick initialize*/
+	MSTK_voidInit();
+	_delay_ms(500);
 	/*Initialize  USART GPIO clock*/
 	MRCC_voidEnablePeripheralClock(AHB1,GPIOA_PORT);
 	/*Initialize the USART*/
@@ -72,14 +75,14 @@ int main(void)
 	/*USART initialize and enable*/
 	MUSART_voidInit();
 	MUSART_voidEnable(USART1);
-	/*SysTick initialize*/
-	MSTK_voidInit();
+
 	/*Initialize the LEDS*/
-	LED_Init(&Led_1);
+	//MRCC_voidEnablePeripheralClock(AHB1,GPIOC_PORT);
+	//LED_Init(&Led_0);
+	//LED_Off (&Led_0);
 	//LED_Init(&Led_3);
 
 	/* begin ---------------------------------------------------------*/
-	LED_On(&Led_1);
 	/*check on the currant App (in sector 4 and 5 )*/
 	if ( UpDate_Flag == No_APP )
 	{
@@ -115,7 +118,7 @@ int main(void)
 		if( LOC_u8RecStatus == Receive )
 		{
 			/*Stop timer Application code in processing*/
-			MSTK_voidStopInterval();
+			MSTK_voidStopInterval(); //----------------->>>>>>>>>>> MSTK_voidReSetInterval((u32)15000000);
 			/*Collecting data in the buffer*/
 			if( u8RecBuffer[u8RecCounter] == '\n' ){	//Indicate The end of the Record
 				if( u8BLWriteReq == 1 ){
@@ -166,7 +169,7 @@ int main(void)
 			if( u8RecBuffer[8] == '1' ){
 				//indicate to successful flashing
 				//LED_On(&Led_3);
-				MUSART_u8Send_Byte(USART1,(u8 *)'D');
+				MUSART_u8Send_Byte(USART1,(u8 *)'K');
 				/*update the flag and jump  */
 				CurrantAPP=UpdateAPP;
 				Func_CallBack();
@@ -180,7 +183,9 @@ int main(void)
 #endif
 
 	if(TimeOutFlag == 1){
+		_delay_ms(20);
 		Jumper();
+		_delay_ms(20);
 	}
 }
 
@@ -199,16 +204,16 @@ void Func_CallBack(void){
 
 	case 1:
 		/*----APP1_S4--- */
+		MSTK_voidStopInterval();
 		MFMI_voidSectorErase(SECTOR_3);
 		MFMI_voidFlashWrite(APP_FLAG_ADD,&APP_1,1);
-		MSTK_voidStopInterval();
 		break;
 
 	case 2:
 		/*----APP2_S5--- */
+		MSTK_voidStopInterval();
 		MFMI_voidSectorErase(SECTOR_3);
 		MFMI_voidFlashWrite(APP_FLAG_ADD,&APP_2,1);
-		MSTK_voidStopInterval();
 		break;
 	}
 }
@@ -224,34 +229,34 @@ void Jumper(void){
 		/*----APP1_S4--- */
 		Disables();
 		BL_voidJumpToAPP_1();
+		_delay_ms(20);
 		break;
 
 	case 2:
 		/*----APP1_S5--- */
 		Disables();
 		BL_voidJumpToAPP_2();
+		_delay_ms(20);
 		break;
 	}
 }
 
 void Disables (void){
 	/*turn off BootLoader LEDs */
-	LED_Off(&Led_1);
-	//LED_Off(&Led_3);
+	//LED_On(&Led_0);
 	/*disable peripherals */
+	//MRCC_voidDisablePeripheralClock(AHB1,GPIOC_PORT);
 	MUSART_voidDisable(USART1);
-	MRCC_voidDisablePeripheralClock(AHB1,GPIOA_PORT);
 	MRCC_voidDisablePeripheralClock(APB2,PERIPHERAL_EN_USART1);
 }
 
 
 /* GIDE for the characters send from the BOOTLOADER -------------------------*/
 /*
-	'B'	---		ACK to inform the gateway this node is in the BOOTLOADER now
-	'K'	---		ACK to inform the gateway this it received the record correct
-	'N'	---		ACK to inform the gateway this it received the record wrong
-	'D'	---		ACK to inform the gateway this it received the last record
-	'F'	---		ACK to inform the gateway this it received failed 3 times
+	'B'	---	ACK to inform the gateway this node is in the BOOTLOADER now 'BOOTLOADER'
+	'K'	---	ACK to inform the gateway this it received the record correct'OK'
+	'N'	---	ACK to inform the gateway this it received the record wrong  'NO'
+	'D'	---	ACK to inform the gateway this it received the last record   'DONE'
+	'F'	---	ACK to inform the gateway this it received failed 3 times	 'FAILED'
  */
-
 

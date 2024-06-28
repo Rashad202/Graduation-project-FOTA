@@ -1,0 +1,6 @@
+../Src/HAL/BUZZER/BUZZER_program.c:39:6:BUZZER_Init	1
+../Src/HAL/BUZZER/BUZZER_program.c:54:6:BUZZER_DeInit	1
+../Src/HAL/BUZZER/BUZZER_program.c:69:6:BUZZER_On	1
+../Src/HAL/BUZZER/BUZZER_program.c:84:6:BUZZER_Off	1
+../Src/HAL/BUZZER/BUZZER_program.c:99:6:BUZZER_Toggle	1
+../Src/HAL/BUZZER/BUZZER_program.c:105:6:BUZZER_vibrat_2s	2

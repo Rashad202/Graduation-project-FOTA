@@ -39,6 +39,12 @@
 /*    				- Struct	:	YES                                                                */
 /*                                                                                                     */
 /*******************************************************************************************************/
+static const LedX_t Led_0 ={
+		GPIOC_PORT,
+		PIN_13
+};
+
+
 static const LedX_t Led_1 ={
 		GPIOA_PORT,
 		PIN_0
@@ -46,8 +52,8 @@ static const LedX_t Led_1 ={
 
 
 static const LedX_t Led_2 ={
-		GPIOA_PORT,
-		PIN_1
+		GPIOC_PORT,
+		PIN_13
 };
 
 static const LedX_t Led_3 ={

@@ -2,7 +2,7 @@
 /*******************************************************************************
  * @file           : main.c
  * @author         : Samy&Rashad&Huda@GP_FOTA_TEAM
- * @Data           : 17 Feb 2024
+ * @Data           : 17 Feb 2024	-	8 May 2024
  * @brief          : GETWAY_V0
  *******************************************************************************/
 /* USER CODE END Header */
@@ -34,11 +34,15 @@
 #define CAN_COMM	 2
 #define GW_communication	USART_COMM
 
-#define GW_DEBUGGING 		DISABLE
-#define GW_IMT_DEBUGGING 	DISABLE
+#define GW_DEBUGGING 		DISBLE
+#define GW_IMT_DEBUGGING 	ENABLE
 /* externs ------------------------------------------------------------------*/
 /* USER CODE BEGIN externs */
 extern const LedX_t Led_3;
+
+//for test
+extern const LedX_t Led_1;
+extern const LedX_t Led_2;
 
 /* USER CODE END externs */
 /* Global variables  ---------------------------------------------------------*/
@@ -62,6 +66,8 @@ int main(void)
 {
 	/*Initialize System Clock to be 16MHz from HSI*/
 	MRCC_voidInitSystemClk();
+	MSTK_voidInit();
+	_delay_ms(1500);
 	/*Initialize  USARTs GPIO clock*/
 	MRCC_voidEnablePeripheralClock(AHB1,GPIOA_PORT);
 	MRCC_voidEnablePeripheralClock(AHB1,GPIOC_PORT);
@@ -92,6 +98,8 @@ int main(void)
 	MSTK_voidInit();
 	/*Initialize the LEDS*/
 	LED_Init(&Led_3);
+	LED_Init(&Led_1);
+	LED_Init(&Led_2);
 
 	/* begin ---------------------------------------------------------*/
 	LED_Off(&Led_3);
@@ -99,7 +107,7 @@ int main(void)
 #if (GW_communication == USART_COMM)
 
 #if	(GW_DEBUGGING == ENABLE)
-	MUSART_u8Send_Data(USART6,(u8*)"---GETWAY_READY---");		//---
+	MUSART_u8Send_Data(USART6,(u8*)"---GETEWAY_READY---");		//---
 	MUSART_u8Send_Data(USART6,MUSART_NewLine);				 	//---
 #endif
 	/*USARTs receive statuses*/
@@ -120,12 +128,15 @@ int main(void)
 			if( u8RecBuffer_6[u8RecCounter_6] == '\n' ){
 				/*indicate the target node and send the restart order to the app*/
 				if( u8FirstLineReq == 1 ){
+
+					/*--------UPDATE  NODE 1 or 2--------*/
 					if (u8RecBuffer_6[0]=='1') {
 #if	(GW_DEBUGGING == ENABLE)
 						MUSART_u8Send_Data(USART6,(u8 *)"Start USART 1");	 //---
 #endif
 						USART=USART1;
 						u8FirstLineReq   = 0 ;
+						LED_On(&Led_1);
 					}
 					else if (u8RecBuffer_6[0]=='2') {
 #if	(GW_DEBUGGING == ENABLE)
@@ -134,17 +145,56 @@ int main(void)
 						USART=USART2;
 						u8FirstLineReq   = 0 ;
 					}
-					//USART=USART2;
+
+					/*--------applications on NODE_1	(FORWARD,BACKWORD,AUTOPARK)--------*/
+					else if(u8RecBuffer_6[0]=='W'){
+						USART=USART1;
+						u8FirstLineReq   = 0 ;
+					}
+					else if(u8RecBuffer_6[0]=='S'){
+						USART=USART1;
+						u8FirstLineReq   = 0 ;
+					}
+					else if(u8RecBuffer_6[0]=='A'){
+						USART=USART1;
+						u8FirstLineReq   = 0 ;
+					}
+					else if(u8RecBuffer_6[0]=='O'){
+						USART=USART1;
+						u8FirstLineReq   = 0 ;
+					}
+
+					/*--------applications on NODE_2	(CONDITIONER)--------*/
+					else if(u8RecBuffer_6[0]=='5'){
+						USART=USART2;
+						u8FirstLineReq   = 0 ;
+					}
+					else if(u8RecBuffer_6[0]=='6'){
+						USART=USART2;
+						u8FirstLineReq   = 0 ;
+					}
+					else{ /*for future fetcher*/ }
 				}
-				u8RecBuffer_6[u8RecCounter_6+1]='\0';// for not sending anything from the older data in the buffer
+				u8RecBuffer_6[u8RecCounter_6+1]='\0';	// for not sending anything from the older data in the buffer
 				/*send to the target*/
 				if(USART==USART1 || USART==USART2){
 					MUSART_u8Send_Data(USART,u8RecBuffer_6);
+					LED_On(&Led_2);
+
+					Led_Toggle(&Led_3);	//led to visualizes the send process
+					/*Set buffer counter to 0 */
+					u8RecCounter_6   = 0 ;
+
+					/*rest usart after ordering the app*/
+					if((u8FirstLineReq  == 0) && (u8RecBuffer_6[0]=='W' || u8RecBuffer_6[0]=='A' || u8RecBuffer_6[0]=='S' || u8RecBuffer_6[0]=='O' || u8RecBuffer_6[0]=='6' || u8RecBuffer_6[0]=='5')){
+						u8FirstLineReq  = 1;
+						USART=0;
+						//Reset_Flags();
+					}
+
 				}
 
-				Led_Toggle(&Led_3);	//led to visualizes the send process
-				/*Set buffer counter to 0 */
-				u8RecCounter_6   = 0 ;
+
 			}
 			else{ u8RecCounter_6++ ; }
 		}
@@ -160,7 +210,7 @@ int main(void)
 #if	(GW_IMT_DEBUGGING == ENABLE)
 				MUSART_u8Send_Data(USART6,(u8 *)"ok");
 #else
-				MUSART_u8Send_Byte(USART6,'O');
+				MUSART_u8Send_Byte(USART6,'K');
 #endif
 			}
 			else if (u8RecBuffer_1=='N' ) {	//error in the record
@@ -181,6 +231,7 @@ int main(void)
 				MUSART_u8Send_Data(USART6," --- ERRORR1\n");	//---
 #endif
 			}
+			Led_Toggle(&Led_3);	//led to visualizes the send process
 		}
 		//---------------------------------------------------------------------------------------
 		//-------------------------------------	 Node 2	-----------------------------------------
@@ -194,7 +245,7 @@ int main(void)
 #if	(GW_IMT_DEBUGGING == ENABLE)
 				MUSART_u8Send_Data(USART6,(u8 *)"ok");
 #else
-				MUSART_u8Send_Byte(USART6,'O');
+				MUSART_u8Send_Byte(USART6,'K');
 #endif
 			}
 			else if (u8RecBuffer_2=='N' ) {	//error in the record
@@ -215,6 +266,7 @@ int main(void)
 				MUSART_u8Send_Data(USART6," --- ERRORR2\n");	//---
 #endif
 			}
+			Led_Toggle(&Led_3);	//led to visualizes the send process
 		}
 	}
 #endif
@@ -239,9 +291,15 @@ void Reset_Flags(void)
 /* GIDE for the characters send from the GETWAY -------------------------*/
 /*
 	'B'	---	ACK to inform the ESP that the node BOOTLOADER respond					  'BOOTLOADER'
-	'O'	---	ACK to inform the ESP that the node BOOTLOADER received the record correct'OK'
+	'K'	---	ACK to inform the ESP that the node BOOTLOADER received the record correct'OK'
 	'N'	---	ACK to inform the ESP that the node BOOTLOADER received the record wrong  'NO'
 	'D'	---	ACK to inform the ESP that the node BOOTLOADER received the last record   'DONE'
 	'F'	---	ACK to inform the ESP that the node BOOTLOADER received failed 3 times	  'FAILED'
+
+
+	'W'	---	ACK to inform the NODE to start FORWARD     application	  'FORWARD'
+	'S'	---	ACK to inform the NODE to start BACKWORD    application   'BACKWORD'
+	'A'	---	ACK to inform the NODE to start AUTOPARK    application   'AUTOPARK'
+	'C'	---	ACK to inform the NODE to start CONDITIONER application	  'CONDITIONER'
  */
 
