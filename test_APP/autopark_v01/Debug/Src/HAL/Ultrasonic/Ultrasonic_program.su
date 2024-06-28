@@ -1,3 +1,0 @@
-../Src/HAL/Ultrasonic/Ultrasonic_program.c:26:6:HULTRA_vInitialize	16	static
-../Src/HAL/Ultrasonic/Ultrasonic_program.c:37:6:HULTRA_vSendTrigger	16	static
-../Src/HAL/Ultrasonic/Ultrasonic_program.c:51:6:HULTRA_vGetDistance	16	static

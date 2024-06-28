@@ -1,3 +1,0 @@
-../Src/HAL/MotorDriver/MotorDriver_program.c:41:6:HAL_MOTOR_Init	2
-../Src/HAL/MotorDriver/MotorDriver_program.c:65:6:HAL_MOTOR_MOVE	5
-../Src/HAL/MotorDriver/MotorDriver_program.c:94:6:HAL_MOTOR_STOP	1
